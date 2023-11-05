@@ -5,7 +5,7 @@ import { Train } from "components/train";
 import { initConfig } from "lib/config";
 import { appState } from "utils/state";
 
-// import "assets/css/base.css";
+import "assets/css/base.css";
 import "assets/css/train.css";
 
 const dom = document.body as HTMLBodyElement;
@@ -14,11 +14,12 @@ van.add(dom, ForkMe());
 van.add(dom, Train());
 
 const animate = () => {
+  requestAnimationFrame(animate);
+
   if (!appState.config.val) {
     return;
   }
 
-  requestAnimationFrame(animate);
   appState.config.val.renderer.render(appState.config.val.scene, appState.config.val.camera);
 };
 
@@ -33,7 +34,7 @@ const handleScroll = () => {
   }
 
   const scrollY = window.scrollY;
-  appState.config.val.train.position.x = scrollY * 0.1;
+  appState.config.val.background.position.x = -scrollY * 0.1;
 };
 
 const handleUnload = () => {

@@ -10,7 +10,7 @@ export const ForkMe = () => {
       href: repoUrl,
       target: "_blank",
       rel: "noopener noreferrer",
-      style: "position: absolute; top: 0; right: 0; border: 0;",
+      style: "position: fixed; top: 0; right: 0; border: 0; z-index: 1;",
     },
     img({
       decoding: "async",

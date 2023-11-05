@@ -5,6 +5,7 @@ export interface Config {
   scene: THREE.Scene;
   camera: THREE.Camera;
   renderer: THREE.Renderer;
+  background: THREE.Mesh;
   train: THREE.Mesh;
 }
 

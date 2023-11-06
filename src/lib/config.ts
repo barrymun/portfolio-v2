@@ -9,25 +9,26 @@ let camera: THREE.PerspectiveCamera | undefined;
 let pointLight: THREE.PointLight | undefined;
 let renderer: THREE.WebGLRenderer | undefined;
 let background: THREE.Mesh | undefined;
-// let train: THREE.Mesh | undefined;
-let train: THREE.Group | undefined;
+// let plane: THREE.Mesh | undefined;
+let plane: THREE.Group | undefined;
 let isLoaded: boolean = false;
 
 const gltfLoader: GLTFLoader = new GLTFLoader();
-gltfLoader.load("/train.glb", (gltf: GLTF) => {
+gltfLoader.load("/jet.glb", (gltf: GLTF) => {
   const object = gltf.scene;
   object.traverse((c) => {
     c.castShadow = true;
   });
 
-  object.scale.multiplyScalar(0.3);
+  // object.scale.multiplyScalar(0.3);
+  object.scale.setScalar(0.5);
   // object.position.y = -4;
   // object.position.z = -1;
 
-  train = object;
-  // train.rotation.y = Math.PI / 2; // facing forward
-  train.rotation.y = (Math.PI * 3) / 2 - 0.5; // facing right
-  train.rotation.x = 0.4;
+  plane = object;
+  // plane.rotation.y = Math.PI / 2; // facing forward
+  plane.rotation.y = (Math.PI * 3) / 2 - 0.5; // facing right
+  // plane.rotation.x = 0.4;
   scene?.add(object);
   isLoaded = true;
 });
@@ -49,8 +50,12 @@ const setupRenderer = () => {
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
   scene.add(camera);
   pointLight = new THREE.PointLight(0xffffff, 0.8);
-  camera.add(pointLight);
+  // camera.add(pointLight);
+  pointLight.position.set(50, 50, 50);
+  scene.add(pointLight);
+
   camera.updateProjectionMatrix();
+
   renderer = new THREE.WebGLRenderer({ alpha: true });
   // renderer.setClearColor(0xff0000, 1); // red
   renderer.setClearColor(0xffffff, 1); // white
@@ -65,38 +70,38 @@ const setupBackground = () => {
   scene?.add(background);
 };
 
-// const setupTrain = () => {
+// const setupPlane = () => {
 //   const geometry = new THREE.BoxGeometry();
 //   const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-//   train = new THREE.Mesh(geometry, material);
-//   scene?.add(train);
+//   plane = new THREE.Mesh(geometry, material);
+//   scene?.add(plane);
 // };
 
 export const initConfig = async () => {
   setupRenderer();
   setupBackground();
-  // setupTrain();
+  // setupPlane();
 
   while (!isLoaded) {
     await new Promise((resolve) => setTimeout(resolve, 100));
   }
 
-  if (!scene || !camera || !renderer || !background || !train) {
+  if (!scene || !camera || !renderer || !background || !plane) {
     throw new Error("Something went wrong in the config");
   }
 
   camera.position.z = 5;
-  background.position.z = -10; // Ensure the background is behind the train
-  train.position.z = 0;
+  background.position.z = -10; // Ensure the background is behind the plane
+  plane.position.z = 0;
 
   // background.position.set(0, 0, 0);  // Set initial position of background
-  // train.position.set(0, 0, 1);  // Set initial position of train slightly in front of the background
+  // plane.position.set(0, 0, 1);  // Set initial position of plane slightly in front of the background
 
   appState.config.val = {
     scene,
     camera,
     renderer,
     background,
-    train,
+    plane,
   };
 };

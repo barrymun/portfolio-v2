@@ -6,7 +6,7 @@ export interface Config {
   camera: THREE.Camera;
   renderer: THREE.Renderer;
   background: THREE.Mesh;
-  train: THREE.Group;
+  plane: THREE.Group;
 }
 
 export interface AppState {

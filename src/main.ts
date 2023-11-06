@@ -1,17 +1,17 @@
 import van from "vanjs-core";
 
 import { ForkMe } from "components/fork-me";
-import { Train } from "components/train";
+import { Plane } from "components/plane";
 import { initConfig } from "lib/config";
 import { appState } from "utils/state";
 
 import "assets/css/base.css";
-import "assets/css/train.css";
+import "assets/css/plane.css";
 
 const dom = document.body as HTMLBodyElement;
 
 van.add(dom, ForkMe());
-van.add(dom, Train());
+van.add(dom, Plane());
 
 const animate = () => {
   requestAnimationFrame(animate);

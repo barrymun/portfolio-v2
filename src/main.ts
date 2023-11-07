@@ -35,6 +35,7 @@ const handleScroll = () => {
 
   const scrollY = window.scrollY;
   appState.config.val.background.position.x = -scrollY * 0.1;
+  appState.config.val.plane.position.z = -scrollY * 0.01;
 };
 
 const handleUnload = () => {

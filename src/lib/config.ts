@@ -15,6 +15,7 @@ let isLoaded: boolean = false;
 
 const gltfLoader: GLTFLoader = new GLTFLoader();
 gltfLoader.load("/jet.glb", (gltf: GLTF) => {
+  console.log("loaded");
   const object = gltf.scene;
   object.traverse((c) => {
     c.castShadow = true;
@@ -26,9 +27,14 @@ gltfLoader.load("/jet.glb", (gltf: GLTF) => {
   // object.position.z = -1;
 
   plane = object;
-  plane.rotation.y = Math.PI / 2 - 0.5; // facing forward
+  plane.rotation.x = (-Math.PI / 180) * 90;
+  plane.rotation.z = (Math.PI / 180) * 90;
+  plane.rotation.y = (Math.PI / 180) * 60;
+
+  // plane.rotation.y = Math.PI / 2; // facing forward
+  // plane.rotation.y = Math.PI / 2 - 0.5; // facing forward with offset
   // plane.rotation.y = (Math.PI * 3) / 2 - 0.5; // facing right
-  // plane.rotation.x = 0.4;
+
   scene?.add(object);
   isLoaded = true;
 });

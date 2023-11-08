@@ -34,8 +34,23 @@ const handleScroll = () => {
   }
 
   const scrollY = window.scrollY;
+
+  // Constants for the sinusoidal movement
+  const amplitude = 3; // This controls the height of the loops
+  const frequency = 0.002; // This controls the width of the loops
+
+  // Sinusoidal position calculation for y-axis
+  const sinusoidalY = amplitude * Math.sin(frequency * scrollY);
+
+  // Update background position
   appState.config.val.background.position.x = -scrollY * 0.1;
-  appState.config.val.plane.position.z = -scrollY * 0.01;
+
+  // Update plane position
+  // appState.config.val.plane.position.z = -scrollY * 0.01;
+
+  // Ensure the plane stays within a certain range on the y-axis
+  // The range is defined by the amplitude of the sinusoidal movement
+  appState.config.val.plane.position.y = sinusoidalY;
 };
 
 const handleUnload = () => {

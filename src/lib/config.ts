@@ -21,13 +21,13 @@ gltfLoader.load("/jet.glb", (gltf: GLTF) => {
   });
 
   // object.scale.multiplyScalar(0.3);
-  object.scale.setScalar(0.5);
+  object.scale.setScalar(0.3);
   // object.position.y = -4;
   // object.position.z = -1;
 
   plane = object;
-  // plane.rotation.y = Math.PI / 2; // facing forward
-  plane.rotation.y = (Math.PI * 3) / 2 - 0.5; // facing right
+  plane.rotation.y = Math.PI / 2 - 0.5; // facing forward
+  // plane.rotation.y = (Math.PI * 3) / 2 - 0.5; // facing right
   // plane.rotation.x = 0.4;
   scene?.add(object);
   isLoaded = true;

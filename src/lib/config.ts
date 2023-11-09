@@ -29,7 +29,8 @@ gltfLoader.load("/jet.glb", (gltf: GLTF) => {
   plane = object;
   plane.rotation.x = (-Math.PI / 180) * 90;
   plane.rotation.z = (Math.PI / 180) * 90;
-  plane.rotation.y = (Math.PI / 180) * 60;
+  plane.rotation.y = (Math.PI / 180) * 90;
+  // plane.rotation.y = Math.PI / 2;
 
   // plane.rotation.y = Math.PI / 2; // facing forward
   // plane.rotation.y = Math.PI / 2 - 0.5; // facing forward with offset

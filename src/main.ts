@@ -32,17 +32,13 @@ const handleScroll = () => {
   if (!appState.config.val) {
     return;
   }
-  console.log({
-    position: appState.config.val.plane.position,
-    rotation: appState.config.val.plane.rotation,
-  });
 
   const scrollY = window.scrollY;
 
-  // Constants for the sinusoidal movement
+  // Constants for the sinusoidal movement and pitch intensity
   const amplitude = 5; // This controls the height of the loops
   const frequency = 0.002; // This controls the width of the loops
-  const rotationIntensity = Math.PI; // One full rotation (in radians)
+  const pitchIntensity = 20; // Adjust this factor to control the pitch intensity
 
   // Update background position
   appState.config.val.background.position.x = -scrollY * 0.1;
@@ -50,30 +46,36 @@ const handleScroll = () => {
   // Sinusoidal position calculation for y-axis
   const sinusoidalY = amplitude * Math.sin(frequency * scrollY);
 
-  // Calculate the rotation of the plane based on its y position
-  // The plane will complete a full rotation (2 * Math.PI radians) at the peak of the sinusoidalY
-  const rotation = rotationIntensity * Math.sin(frequency * scrollY);
-
   // Update plane position
-  // appState.config.val.plane.position.z = -scrollY * 0.01;
-  // appState.config.val.plane.rotation.x = -scrollY * 0.01;
-  // appState.config.val.plane.rotation.x += 0.01;
-  // appState.config.val.plane.rotation.z += 0.01;
-  // appState.config.val.plane.rotation.y = -scrollY * 0.01;
-  appState.config.val.plane.position.y = sinusoidalY;
-  // return;
+  // appState.config.val.plane.position.y = sinusoidalY;
 
-  // Apply rotation to the plane
-  // Assuming that the plane needs to rotate around the x-axis to perform a loop
-  // appState.config.val.plane.rotation.x = rotation;
+  // Calculate the desired pitch angle based on the slope of the sine wave
+  const slope = Math.cos(frequency * scrollY);
+  // Adjust pitch based on the slope and intensity factor
+  let pitchAngle = slope * pitchIntensity;
+
+  // Ensure the pitchAngle transitions smoothly
+  console.log(pitchAngle);
+  pitchAngle *= Math.PI / 180; // Convert degrees to radians for smoother transition
+  // console.log(pitchAngle);
+
+  // Update plane rotation to pitch upwards or downwards
+  // Using the corrected originalPitch of 90 degrees
+  const originalPitch = Math.PI / 2; // 90 degrees in radians
+  // const originalPitch = 1.92;
+  appState.config.val.plane.rotation.y = originalPitch - pitchAngle;
+
+  // Set the other rotation components to their original values
+  appState.config.val.plane.rotation.x = (-Math.PI / 180) * 90;
+  appState.config.val.plane.rotation.z = (Math.PI / 180) * 90;
 };
 
 const handleUnload = () => {
   window.removeEventListener("load", handleLoad);
   window.removeEventListener("unload", handleUnload);
-  // window.removeEventListener("scroll", handleScroll);
+  window.removeEventListener("scroll", handleScroll);
 };
 
 window.addEventListener("load", handleLoad);
 window.addEventListener("unload", handleUnload);
-// window.addEventListener("scroll", handleScroll);
+window.addEventListener("scroll", handleScroll);

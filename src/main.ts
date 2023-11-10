@@ -47,17 +47,16 @@ const handleScroll = () => {
   const sinusoidalY = amplitude * Math.sin(frequency * scrollY);
 
   // Update plane position
-  // appState.config.val.plane.position.y = sinusoidalY;
+  appState.config.val.plane.position.y = sinusoidalY;
 
   // Calculate the desired pitch angle based on the slope of the sine wave
-  const slope = Math.cos(frequency * scrollY);
+  const slope = Math.sin(frequency * scrollY);
   // Adjust pitch based on the slope and intensity factor
   let pitchAngle = slope * pitchIntensity;
 
   // Ensure the pitchAngle transitions smoothly
   console.log(pitchAngle);
   pitchAngle *= Math.PI / 180; // Convert degrees to radians for smoother transition
-  // console.log(pitchAngle);
 
   // Update plane rotation to pitch upwards or downwards
   // Using the corrected originalPitch of 90 degrees

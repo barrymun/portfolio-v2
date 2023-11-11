@@ -55,13 +55,11 @@ const handleScroll = () => {
   let pitchAngle = slope * pitchIntensity;
 
   // Ensure the pitchAngle transitions smoothly
-  console.log(pitchAngle);
   pitchAngle *= Math.PI / 180; // Convert degrees to radians for smoother transition
 
   // Update plane rotation to pitch upwards or downwards
   // Using the corrected originalPitch of 90 degrees
   const originalPitch = Math.PI / 2; // 90 degrees in radians
-  // const originalPitch = 1.92;
   appState.config.val.plane.rotation.y = originalPitch - pitchAngle;
 
   // Set the other rotation components to their original values

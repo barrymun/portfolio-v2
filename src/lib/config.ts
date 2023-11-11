@@ -9,34 +9,23 @@ let camera: THREE.PerspectiveCamera | undefined;
 let pointLight: THREE.PointLight | undefined;
 let renderer: THREE.WebGLRenderer | undefined;
 let background: THREE.Mesh | undefined;
-// let plane: THREE.Mesh | undefined;
 let plane: THREE.Group | undefined;
 let isLoaded: boolean = false;
 
 const gltfLoader: GLTFLoader = new GLTFLoader();
 gltfLoader.load("/jet.glb", (gltf: GLTF) => {
-  console.log("loaded");
   const object = gltf.scene;
   object.traverse((c) => {
     c.castShadow = true;
   });
 
-  // object.scale.multiplyScalar(0.3);
   object.scale.setScalar(0.3);
-  // object.position.y = -4;
-  // object.position.z = -1;
+  object.rotation.x = (-Math.PI / 180) * 90;
+  object.rotation.z = (Math.PI / 180) * 90;
+  object.rotation.y = (Math.PI / 180) * 90;
 
   plane = object;
-  plane.rotation.x = (-Math.PI / 180) * 90;
-  plane.rotation.z = (Math.PI / 180) * 90;
-  plane.rotation.y = (Math.PI / 180) * 90;
-  // plane.rotation.y = Math.PI / 2;
-
-  // plane.rotation.y = Math.PI / 2; // facing forward
-  // plane.rotation.y = Math.PI / 2 - 0.5; // facing forward with offset
-  // plane.rotation.y = (Math.PI * 3) / 2 - 0.5; // facing right
-
-  scene?.add(object);
+  scene?.add(plane);
   isLoaded = true;
 });
 

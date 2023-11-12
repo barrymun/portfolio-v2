@@ -19,7 +19,7 @@ gltfLoader.load("/jet.glb", (gltf: GLTF) => {
     c.castShadow = true;
   });
 
-  object.scale.setScalar(0.3);
+  object.scale.setScalar(0.2);
   object.rotation.x = (-Math.PI / 180) * 90;
   object.rotation.z = (Math.PI / 180) * 90;
   object.rotation.y = (Math.PI / 180) * 90;

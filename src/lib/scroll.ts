@@ -29,7 +29,7 @@ const movePlane = (scrollY: number) => {
   }
 
   // Constants for the sinusoidal movement and pitch intensity
-  const amplitude = 5; // This controls the height of the loops
+  const amplitude = 3; // This controls the height of the loops
   const frequency = 0.002; // This controls the width of the loops
   const pitchIntensity = 20; // Adjust this factor to control the pitch intensity
 
@@ -62,18 +62,11 @@ const movePlane = (scrollY: number) => {
 
 // Function to programmatically scroll to a checkpoint
 const scrollToCheckpoint = async () => {
-  console.log("X");
-  const checkpoint = 2000; // Replace with the actual checkpoint value
-
-  // window.scrollTo({
-  //   top: checkpoint,
-  //   behavior: 'smooth'
-  // });
+  const checkpoint = 2000; // TODO: going to need different checkpoints for different maneuvers
 
   let scrollPos: number = 0;
   while (scrollPos < checkpoint) {
-    // window.scrollBy(0, 1);
-    scrollPos += 5;
+    scrollPos += 8;
     movePlane(scrollPos);
     await new Promise((resolve) => setTimeout(resolve, 1));
   }

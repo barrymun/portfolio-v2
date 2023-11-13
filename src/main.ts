@@ -30,6 +30,7 @@ const handleLoad = () => {
 };
 
 const handleUnload = () => {
+  // Reset scroll position to top
   window.scrollTo(0, 0);
 
   window.removeEventListener("load", handleLoad);

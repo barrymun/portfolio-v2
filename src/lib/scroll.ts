@@ -1,7 +1,7 @@
 import { movePlaneUpAndDown } from "lib/plane";
 import { getPeriod } from "utils/helpers";
 
-let isUserScrolling: boolean = true;
+let canUserScroll: boolean = true;
 let lastScrollTop: number = 0; // store the last known scroll position
 
 // Function to programmatically scroll to a checkpoint
@@ -16,8 +16,9 @@ const scrollToCheckpoint = async () => {
     await new Promise((resolve) => setTimeout(resolve, 1));
   }
 
-  // After scrolling to the checkpoint, give control back to the user
-  // window.addEventListener('scroll', relinquishControl);
+  // Reattach the listener
+  window.addEventListener("scroll", handleUserScroll);
+  canUserScroll = true;
 };
 
 // Function to handle user scroll
@@ -27,15 +28,15 @@ const handleUserScroll = (_event: Event) => {
   const direction = st > lastScrollTop ? "down" : "up";
   lastScrollTop = st <= 0 ? 0 : st; // For Mobile or negative scrolling
 
-  if (isUserScrolling) {
-    isUserScrolling = false;
+  if (canUserScroll) {
+    canUserScroll = false;
     console.log(`User is scrolling ${direction}.`);
     // Your logic to determine if you want to take over the scroll
     // if (shouldTakeOverScroll(st)) {
 
     // }
 
-    window.removeEventListener("scroll", handleUserScroll); // Temporarily remove the listener
+    window.removeEventListener("scroll", handleUserScroll); // temporarily remove the listener
 
     scrollToCheckpoint(); // Your function to scroll to a checkpoint
   }

@@ -1,4 +1,5 @@
-import { performBackflip, pitchFrequency } from "lib/plane";
+import { performBackflip } from "lib/plane";
+import { pitchFrequency, scrollOffset } from "utils/constants";
 import { getPeriod } from "utils/helpers";
 
 let canUserScroll: boolean = true;
@@ -12,7 +13,7 @@ const scrollToCheckpoint = async () => {
 
   let scrollPos: number = 0;
   while (scrollPos < checkpoint) {
-    scrollPos += 8;
+    scrollPos += scrollOffset;
     // movePlaneUpAndDown(scrollPos);
     // movePlaneLeftAndRight(scrollPos);
     performBackflip(scrollPos);

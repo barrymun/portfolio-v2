@@ -1,14 +1,13 @@
+import {
+  pitchAmplitude,
+  pitchFrequency,
+  pitchIntensity,
+  rollAmplitude,
+  rollFrequency,
+  scrollOffset,
+  straightAndLevelPosition,
+} from "utils/constants";
 import { appState } from "utils/state";
-
-// Constants for the sinusoidal movement and pitch intensity
-export const pitchAmplitude: number = 3; // This controls the height of the loops
-export const pitchFrequency: number = 0.002; // This controls the width of the loops
-export const pitchIntensity: number = 20; // Adjust this factor to control the pitch intensity
-// Constants for the rocking motion
-export const rollAmplitude = (Math.PI / 180) * 30; // 30 degrees in radians
-export const rollFrequency = 0.005; // Adjust this for how quickly you want the plane to rock
-
-const straightAndLevelPosition: number = Math.PI / 2; // 90 degrees in radians
 
 const movePlaneUpAndDown = (scrollY: number) => {
   if (!appState.config.val) {
@@ -70,7 +69,7 @@ const performBackflip = (scrollY: number) => {
   appState.config.val.plane.position.y = sinusoidalY;
   // appState.config.val.plane.position.x = sinusoidalY; // TODO: might do something with the x-axis
 
-  appState.config.val.plane.rotation.y -= 0.016;
+  appState.config.val.plane.rotation.y -= (scrollOffset / 1000) * 2;
 };
 
 export { movePlaneUpAndDown, movePlaneLeftAndRight, performBackflip };

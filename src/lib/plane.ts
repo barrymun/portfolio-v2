@@ -16,6 +16,11 @@ const performHover = (scrollY: number) => {
     return;
   }
 
+  // don't perform the hover manoeuvre if the user is scrolling
+  if (appState.isPerformingManoeuvre.val) {
+    return;
+  }
+
   const rollAngle: number = hoverAmplitude * Math.sin(hoverFrequency * scrollY);
   const rotationAngle: number = straightAndLevelPosition - rollAngle;
   // bank left and right slightly

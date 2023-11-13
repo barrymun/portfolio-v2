@@ -11,4 +11,5 @@ export interface Config {
 
 export interface AppState {
   config: State<Config | undefined>;
+  isPerformingManoeuvre: State<boolean>;
 }

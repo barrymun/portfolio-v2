@@ -3,6 +3,7 @@ import van from "vanjs-core";
 import { ForkMe } from "components/fork-me";
 import { Plane } from "components/plane";
 import { initConfig } from "lib/config";
+import { performHover } from "lib/plane";
 import { handleUserScroll } from "lib/scroll";
 import { appState } from "utils/state";
 
@@ -14,6 +15,8 @@ const dom = document.body as HTMLBodyElement;
 van.add(dom, ForkMe());
 van.add(dom, Plane());
 
+let counter: number = 0;
+
 const animate = () => {
   requestAnimationFrame(animate);
 
@@ -22,6 +25,9 @@ const animate = () => {
   }
 
   appState.config.val.renderer.render(appState.config.val.scene, appState.config.val.camera);
+
+  performHover(counter);
+  counter += 4;
 };
 
 const handleLoad = () => {

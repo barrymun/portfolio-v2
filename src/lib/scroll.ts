@@ -1,15 +1,18 @@
-import { performBackflip } from "lib/plane";
-import { pitchFrequency, scrollOffset } from "utils/constants";
+import {
+  // movePlaneLeftAndRight,
+  // movePlaneUpAndDown,
+  performBackflip,
+} from "lib/plane";
+import { flipFrequency, scrollOffset } from "utils/constants";
 import { getPeriod } from "utils/helpers";
 
 let canUserScroll: boolean = true;
 let lastScrollTop: number = 0; // store the last known scroll position
 
-// Function to programmatically scroll to a checkpoint
 const scrollToCheckpoint = async () => {
-  const checkpoint = getPeriod(pitchFrequency);
+  // const checkpoint = getPeriod(pitchFrequency);
   // const checkpoint = getPeriod(rollFrequency);
-  console.log({ checkpoint });
+  const checkpoint = getPeriod(flipFrequency);
 
   let scrollPos: number = 0;
   while (scrollPos < checkpoint) {
@@ -25,7 +28,6 @@ const scrollToCheckpoint = async () => {
   canUserScroll = true;
 };
 
-// Function to handle user scroll
 const handleUserScroll = (_event: Event) => {
   // Determine the direction of the scroll
   const st = window.scrollY || document.documentElement.scrollTop;
@@ -35,14 +37,9 @@ const handleUserScroll = (_event: Event) => {
   if (canUserScroll) {
     canUserScroll = false;
     console.log(`User is scrolling ${direction}.`);
-    // Your logic to determine if you want to take over the scroll
-    // if (shouldTakeOverScroll(st)) {
-
-    // }
-
-    window.removeEventListener("scroll", handleUserScroll); // temporarily remove the listener
-
-    scrollToCheckpoint(); // Your function to scroll to a checkpoint
+    // temporarily remove the listener
+    window.removeEventListener("scroll", handleUserScroll);
+    scrollToCheckpoint();
   }
 };
 

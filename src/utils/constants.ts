@@ -8,5 +8,10 @@ export const pitchAmplitude: number = 3; // This controls the height of the loop
 export const pitchFrequency: number = 0.002; // This controls the width of the loops
 export const pitchIntensity: number = 20; // Adjust this factor to control the pitch intensity
 // Constants for the rocking motion
-export const rollAmplitude = (Math.PI / 180) * 30; // 30 degrees in radians
-export const rollFrequency = 0.005; // Adjust this for how quickly you want the plane to rock
+export const rollAmplitude: number = (Math.PI / 180) * 30; // 30 degrees in radians
+export const rollFrequency: number = 0.005; // Adjust this for how quickly you want the plane to rock
+// Constants for the backflip motion
+export const flipFrequency: number = pitchFrequency;
+// Constant for the hover motion
+export const hoverAmplitude: number = (Math.PI / 180) * 5;
+export const hoverFrequency: number = 0.003;

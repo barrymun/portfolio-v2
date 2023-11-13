@@ -23,7 +23,7 @@ let lastScrollTop: number = 0;
 //   }, 100); // Timeout may need to be adjusted
 // };
 
-const movePlane = (scrollY: number) => {
+const movePlaneUpAndDown = (scrollY: number) => {
   if (!appState.config.val) {
     return;
   }
@@ -60,14 +60,19 @@ const movePlane = (scrollY: number) => {
   appState.config.val.plane.rotation.z = (Math.PI / 180) * 90;
 };
 
+const getPeriod = (frequency: number): number => {
+  return (2 * Math.PI) / Math.abs(frequency);
+};
+
 // Function to programmatically scroll to a checkpoint
 const scrollToCheckpoint = async () => {
-  const checkpoint = 2000; // TODO: going to need different checkpoints for different maneuvers
+  const checkpoint = getPeriod(0.002);
+  console.log({ checkpoint });
 
   let scrollPos: number = 0;
   while (scrollPos < checkpoint) {
     scrollPos += 8;
-    movePlane(scrollPos);
+    movePlaneUpAndDown(scrollPos);
     await new Promise((resolve) => setTimeout(resolve, 1));
   }
 

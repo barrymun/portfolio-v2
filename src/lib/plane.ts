@@ -55,4 +55,22 @@ const movePlaneLeftAndRight = (scrollY: number) => {
   appState.config.val.plane.rotation.z = straightAndLevelPosition - rollAngle;
 };
 
-export { movePlaneUpAndDown, movePlaneLeftAndRight };
+const performBackflip = (scrollY: number) => {
+  if (!appState.config.val) {
+    return;
+  }
+
+  // Update background position
+  appState.config.val.background.position.x = -scrollY * 0.1;
+
+  // Sinusoidal position calculation for y-axis
+  const sinusoidalY = pitchAmplitude * Math.sin(pitchFrequency * scrollY);
+
+  // Update plane position
+  appState.config.val.plane.position.y = sinusoidalY;
+  // appState.config.val.plane.position.x = sinusoidalY; // TODO: might do something with the x-axis
+
+  appState.config.val.plane.rotation.y -= 0.016;
+};
+
+export { movePlaneUpAndDown, movePlaneLeftAndRight, performBackflip };

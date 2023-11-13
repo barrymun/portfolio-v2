@@ -1,4 +1,4 @@
-import { movePlaneLeftAndRight, rollFrequency } from "lib/plane";
+import { performBackflip, pitchFrequency } from "lib/plane";
 import { getPeriod } from "utils/helpers";
 
 let canUserScroll: boolean = true;
@@ -6,15 +6,16 @@ let lastScrollTop: number = 0; // store the last known scroll position
 
 // Function to programmatically scroll to a checkpoint
 const scrollToCheckpoint = async () => {
-  // const checkpoint = getPeriod(pitchFrequency);
-  const checkpoint = getPeriod(rollFrequency);
+  const checkpoint = getPeriod(pitchFrequency);
+  // const checkpoint = getPeriod(rollFrequency);
   console.log({ checkpoint });
 
   let scrollPos: number = 0;
   while (scrollPos < checkpoint) {
     scrollPos += 8;
     // movePlaneUpAndDown(scrollPos);
-    movePlaneLeftAndRight(scrollPos);
+    // movePlaneLeftAndRight(scrollPos);
+    performBackflip(scrollPos);
     await new Promise((resolve) => setTimeout(resolve, 1));
   }
 

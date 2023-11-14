@@ -9,9 +9,20 @@ export interface Config {
   plane: THREE.Group;
 }
 
+export type ScrollDirection = "down" | "up";
+
+export type PlaneDirection = "right" | "left";
+
+export type PlaneManoeuvre = "pitch-up-down" | "bank-left-right" | "backflip";
+
+export type Progression = {
+  checkpoint: number;
+  manoeuvre: PlaneManoeuvre;
+};
+
 export interface AppState {
   config: State<Config | undefined>;
   isPerformingManoeuvre: State<boolean>;
+  planeDirection: State<PlaneDirection>;
+  progressions: State<Progression[]>;
 }
-
-export type ScrollDirection = "up" | "down";

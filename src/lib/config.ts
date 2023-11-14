@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { GLTF, GLTFLoader } from "three/examples/jsm/Addons.js";
 
+import { getCheckpoint } from "utils/helpers";
 import { appState } from "utils/state";
 
 let scene: THREE.Scene | undefined;
@@ -66,17 +67,38 @@ const setupBackground = () => {
   scene?.add(background);
 };
 
-// const setupPlane = () => {
-//   const geometry = new THREE.BoxGeometry();
-//   const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-//   plane = new THREE.Mesh(geometry, material);
-//   scene?.add(plane);
-// };
+const setupProgression = () => {
+  // TODO: rework based on the number of projects added
+  const checkpoints: number[] = [
+    getCheckpoint("pitch-up-down"),
+    getCheckpoint("bank-left-right"),
+    getCheckpoint("backflip"),
+  ];
+
+  const sumCheckpoints: number = checkpoints.reduce((a, b) => a + b, 0);
+  console.log({ sumCheckpoints });
+  Object.assign(document.body.style, { height: `${sumCheckpoints}px` });
+
+  appState.progressions.val = [
+    {
+      checkpoint: checkpoints[0],
+      manoeuvre: "pitch-up-down",
+    },
+    {
+      checkpoint: checkpoints[1],
+      manoeuvre: "bank-left-right",
+    },
+    {
+      checkpoint: checkpoints[2],
+      manoeuvre: "backflip",
+    },
+  ];
+};
 
 export const initConfig = async () => {
   setupRenderer();
   setupBackground();
-  // setupPlane();
+  setupProgression();
 
   while (!isLoaded) {
     await new Promise((resolve) => setTimeout(resolve, 100));

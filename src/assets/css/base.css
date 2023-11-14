@@ -16,9 +16,6 @@
 body {
   margin: 0;
   width: 100vw;
-  height: 200vh; /* TODO: will have to set up some sort of background */
-  /* height: 4000px; */
-  /* overflow: hidden; */
 }
 
 a {

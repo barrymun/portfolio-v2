@@ -4,7 +4,6 @@ import { ForkMe } from "components/fork-me";
 import { Plane } from "components/plane";
 import { initConfig } from "lib/config";
 import { performHover } from "lib/plane";
-import { handleUserScroll } from "lib/scroll";
 import { appState } from "utils/state";
 
 import "assets/css/base.css";
@@ -36,16 +35,9 @@ const handleLoad = () => {
 };
 
 const handleUnload = () => {
-  // Reset scroll position to top
-  window.scrollTo(0, 0);
-
   window.removeEventListener("load", handleLoad);
   window.removeEventListener("unload", handleUnload);
-  // window.removeEventListener("scroll", handleScroll);
-  window.removeEventListener("scroll", handleUserScroll);
 };
 
 window.addEventListener("load", handleLoad);
 window.addEventListener("unload", handleUnload);
-// window.addEventListener("scroll", handleScroll);
-window.addEventListener("scroll", handleUserScroll);

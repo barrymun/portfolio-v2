@@ -75,12 +75,6 @@ const setupProgression = () => {
     getCheckpoint("backflip"),
   ];
 
-  // const sumCheckpoints: number = checkpoints.reduce((a, b) => a + b, 0);
-  // console.log({ sumCheckpoints });
-  // Object.assign(document.body.style, { height: `${sumCheckpoints}px` });
-  // Object.assign(document.body.style, { height: `${checkpoints[0]}px` });
-  Object.assign(document.body.style, { height: `calc(100vh + 1px)` });
-
   appState.progressions.val = [
     {
       checkpoint: checkpoints[0],

@@ -2,8 +2,11 @@ import { appState } from "utils/state";
 import { Star } from "utils/types";
 
 const canvas = document.createElement("canvas");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 const ctx = canvas.getContext("2d")!;
-const numStars = 100;
+const numStars: number = 300;
+const interactionDistance: number = 100; // px
 const stars: Star[] = [];
 
 const drawStars = () => {
@@ -23,7 +26,7 @@ const handleMouseMove = (e: MouseEvent) => {
   for (const star of stars) {
     const distance = Math.sqrt((star.x - mouseX) ** 2 + (star.y - mouseY) ** 2);
 
-    if (distance < 50) {
+    if (distance < interactionDistance) {
       // Move the star away from the mouse pointer
       star.x += (star.x - mouseX) * 0.02;
       star.y += (star.y - mouseY) * 0.02;

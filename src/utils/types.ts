@@ -25,4 +25,5 @@ export interface AppState {
   isPerformingManoeuvre: State<boolean>;
   planeDirection: State<PlaneDirection>;
   progressions: State<Progression[]>;
+  currentProgressionIndex: State<number>;
 }

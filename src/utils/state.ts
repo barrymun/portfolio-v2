@@ -7,4 +7,5 @@ export const appState: AppState = {
   progressions: van.state<Progression[]>([]),
   isPerformingManoeuvre: van.state<boolean>(false),
   planeDirection: van.state<PlaneDirection>("right"),
+  currentProgressionIndex: van.state<number>(0),
 };

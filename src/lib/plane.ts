@@ -11,7 +11,7 @@ import {
 } from "utils/constants";
 import { getCheckpoint } from "utils/helpers";
 import { appState } from "utils/state";
-import { PlaneManoeuvre, ScrollDirection } from "utils/types";
+import { ScrollDirection } from "utils/types";
 
 const performHover = (offset: number) => {
   if (!appState.config.val) {
@@ -99,17 +99,22 @@ const performBackflip = (offset: number) => {
   appState.config.val.plane.rotation.y -= (scrollOffset / 1000) * 2;
 };
 
-const performManoeuvre = async (type: PlaneManoeuvre) => {
+const performManoeuvre = async () => {
   if (!appState.config.val) {
     return;
   }
 
-  const checkpoint = getCheckpoint(type);
+  if (appState.currentProgressionIndex.val >= appState.progressions.val.length) {
+    return;
+  }
+
+  const manoeuvre = appState.progressions.val[appState.currentProgressionIndex.val].manoeuvre;
+  const checkpoint = getCheckpoint(manoeuvre);
 
   appState.isPerformingManoeuvre.val = true;
   let offset: number = 0;
   while (offset < checkpoint) {
-    switch (type) {
+    switch (manoeuvre) {
       case "pitch-up-down":
         movePlaneUpAndDown(offset);
         break;
@@ -123,6 +128,7 @@ const performManoeuvre = async (type: PlaneManoeuvre) => {
     offset += scrollOffset;
     await new Promise((resolve) => setTimeout(resolve, 1));
   }
+  appState.currentProgressionIndex.val += 1;
   appState.isPerformingManoeuvre.val = false;
 };
 

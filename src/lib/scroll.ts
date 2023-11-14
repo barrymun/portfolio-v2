@@ -6,6 +6,7 @@ import {
 import { flipFrequency, scrollOffset } from "utils/constants";
 import { getPeriod } from "utils/helpers";
 import { appState } from "utils/state";
+import { ScrollDirection } from "utils/types";
 
 let canUserScroll: boolean = true;
 let lastScrollTop: number = 0; // store the last known scroll position
@@ -35,7 +36,7 @@ const scrollToCheckpoint = async () => {
 const handleUserScroll = (_event: Event) => {
   // determine the direction of the scroll
   const st = window.scrollY || document.documentElement.scrollTop;
-  const direction = st > lastScrollTop ? "down" : "up";
+  const direction: ScrollDirection = st > lastScrollTop ? "down" : "up";
   lastScrollTop = st <= 0 ? 0 : st; // For Mobile or negative scrolling
 
   if (canUserScroll) {

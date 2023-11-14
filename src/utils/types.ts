@@ -13,3 +13,5 @@ export interface AppState {
   config: State<Config | undefined>;
   isPerformingManoeuvre: State<boolean>;
 }
+
+export type ScrollDirection = "up" | "down";

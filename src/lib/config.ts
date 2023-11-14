@@ -9,7 +9,6 @@ let ambientLight: THREE.AmbientLight | undefined;
 let camera: THREE.PerspectiveCamera | undefined;
 let pointLight: THREE.PointLight | undefined;
 let renderer: THREE.WebGLRenderer | undefined;
-let background: THREE.Mesh | undefined;
 let plane: THREE.Group | undefined;
 let isLoaded: boolean = false;
 
@@ -55,16 +54,9 @@ const setupRenderer = () => {
 
   renderer = new THREE.WebGLRenderer({ alpha: true });
   // renderer.setClearColor(0xff0000, 1); // red
-  renderer.setClearColor(0xffffff, 1); // white
+  // renderer.setClearColor(0xffffff, 1); // white
+  renderer.setClearColor(0x000000, 0); // transparent
   renderer.setSize(window.innerWidth, window.innerHeight);
-};
-
-const setupBackground = () => {
-  const geometry = new THREE.PlaneGeometry(50, 50, 1, 1);
-  const texture = new THREE.TextureLoader().load("background.jpeg"); // Replace with the path to your texture
-  const material = new THREE.MeshBasicMaterial({ map: texture });
-  background = new THREE.Mesh(geometry, material);
-  scene?.add(background);
 };
 
 const setupProgression = () => {
@@ -94,29 +86,23 @@ const setupProgression = () => {
 
 export const initConfig = async () => {
   setupRenderer();
-  setupBackground();
   setupProgression();
 
   while (!isLoaded) {
     await new Promise((resolve) => setTimeout(resolve, 100));
   }
 
-  if (!scene || !camera || !renderer || !background || !plane) {
+  if (!scene || !camera || !renderer || !plane) {
     throw new Error("Something went wrong in the config");
   }
 
   camera.position.z = 5;
-  background.position.z = -10; // Ensure the background is behind the plane
   plane.position.z = 0;
-
-  // background.position.set(0, 0, 0);  // Set initial position of background
-  // plane.position.set(0, 0, 1);  // Set initial position of plane slightly in front of the background
 
   appState.config.val = {
     scene,
     camera,
     renderer,
-    background,
     plane,
   };
 };

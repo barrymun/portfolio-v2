@@ -37,13 +37,8 @@ const performHover = (position: number) => {
   appState.config.val.plane.position.x -= rollAngle / 50;
 };
 
-const moveBackground = (position: number) => {
-  if (!appState.config.val) {
-    return;
-  }
-
-  // Update background position
-  appState.config.val.background.position.x = -position * 0.1;
+const moveBackground = (_position: number) => {
+  // TODO: move background
 };
 
 const movePlaneUpAndDown = (position: number) => {
@@ -140,4 +135,20 @@ const setDirection = (direction: ScrollDirection) => {
   appState.config.val.plane.rotation.y = direction === "down" ? (Math.PI / 180) * 90 : (-Math.PI / 180) * 90;
 };
 
-export { performHover, movePlaneUpAndDown, movePlaneLeftAndRight, performBackflip, performManoeuvre, setDirection };
+const renderPlane = () => {
+  if (!appState.config.val) {
+    return;
+  }
+
+  appState.config.val.renderer.render(appState.config.val.scene, appState.config.val.camera);
+};
+
+export {
+  performHover,
+  movePlaneUpAndDown,
+  movePlaneLeftAndRight,
+  performBackflip,
+  performManoeuvre,
+  setDirection,
+  renderPlane,
+};

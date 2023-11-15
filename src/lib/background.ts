@@ -5,7 +5,7 @@ const canvas = document.createElement("canvas");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 const ctx = canvas.getContext("2d")!;
-const numStars: number = 300;
+const numStars: number = 400;
 const interactionDistance: number = 100; // px
 const stars: Star[] = [];
 
@@ -30,7 +30,17 @@ const moveStars = () => {
     const distance = Math.sqrt((star.x - mousePosition.x) ** 2 + (star.y - mousePosition.y) ** 2);
 
     if (distance < interactionDistance) {
-      // no-op
+      // move the stars in a circular path outside the interaction distance
+      const angle = Math.atan2(star.y - mousePosition.y, star.x - mousePosition.x);
+      const randomAngleOffset: number = Math.random() * (Math.PI / 6);
+      const randomRadiusOffset: number = Math.random() * 10;
+      const randomDistanceOffset: number = interactionDistance + randomRadiusOffset;
+      const targetX = mousePosition.x + randomDistanceOffset * Math.cos(angle + randomAngleOffset);
+      const targetY = mousePosition.y + randomDistanceOffset * Math.sin(angle + randomAngleOffset);
+
+      // gradually move the star towards the target position
+      star.x += (targetX - star.x) * 0.02;
+      star.y += (targetY - star.y) * 0.02;
     } else {
       // revert to the original position
       star.x += (star.originalX - star.x) * 0.02;

@@ -5,10 +5,6 @@ import { appState } from "utils/state";
 const { div } = van.tags;
 
 export const Plane = () => {
-  // van.derive(() => {
-  //   console.log(appState.config.val);
-  // });
-
   return div(
     {
       class: "plane",

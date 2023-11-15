@@ -28,6 +28,7 @@
     "vite-tsconfig-paths": "^4.2.0"
   },
   "dependencies": {
+    "@tabler/icons": "^2.40.0",
     "lodash": "^4.17.21",
     "three": "^0.158.0",
     "vanjs-core": "^1.2.1"

@@ -34,3 +34,8 @@ export type Star = {
   originalX: number;
   originalY: number;
 };
+
+export type IconProps = {
+  width?: number;
+  height?: number;
+};

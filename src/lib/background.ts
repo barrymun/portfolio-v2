@@ -9,6 +9,8 @@ const numStars: number = 300;
 const interactionDistance: number = 100; // px
 const stars: Star[] = [];
 
+let mousePosition: { x: number; y: number } | undefined = undefined;
+
 const drawStars = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = "white";
@@ -16,6 +18,24 @@ const drawStars = () => {
     ctx.beginPath();
     ctx.arc(star.x, star.y, 2, 0, Math.PI * 2);
     ctx.fill();
+  }
+};
+
+const moveStars = () => {
+  if (!mousePosition) {
+    return;
+  }
+
+  for (const star of stars) {
+    const distance = Math.sqrt((star.x - mousePosition.x) ** 2 + (star.y - mousePosition.y) ** 2);
+
+    if (distance < interactionDistance) {
+      // no-op
+    } else {
+      // revert to the original position
+      star.x += (star.originalX - star.x) * 0.02;
+      star.y += (star.originalY - star.y) * 0.02;
+    }
   }
 };
 
@@ -27,17 +47,20 @@ const handleMouseMove = (e: MouseEvent) => {
     const distance = Math.sqrt((star.x - mouseX) ** 2 + (star.y - mouseY) ** 2);
 
     if (distance < interactionDistance) {
-      // Move the star away from the mouse pointer
+      // move the star away from the mouse pointer
       star.x += (star.x - mouseX) * 0.02;
       star.y += (star.y - mouseY) * 0.02;
     } else {
-      // Revert to the original position
+      // revert to the original position
       star.x += (star.originalX - star.x) * 0.02;
       star.y += (star.originalY - star.y) * 0.02;
     }
   }
 
-  drawStars();
+  mousePosition = {
+    x: mouseX,
+    y: mouseY,
+  };
 };
 
 canvas.addEventListener("mousemove", handleMouseMove);
@@ -64,6 +87,7 @@ const initBackground = () => {
 
 const renderBackground = () => {
   drawStars();
+  moveStars();
 };
 
 export { initBackground, renderBackground };

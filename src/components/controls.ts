@@ -1,17 +1,24 @@
 import van from "vanjs-core";
 
-import { ArrowNarrowLeft } from "components/icons/arrow-narrow-left";
+// import ArrowNarrowLeftSrc from "@tabler/icons/arrow-narrow-left.svg";
+// import ArrowNarrowRightSrc from "@tabler/icons/arrow-narrow-right.svg";
 
-const { button, div } = van.tags;
+const { button, div, img } = van.tags;
 
 export const Controls = () => {
   return div(
     {
       class: "controls",
     },
-    button(ArrowNarrowLeft({ width: 24, height: 24 })),
     button(
-      ArrowNarrowLeft({ width: 24, height: 24 }), // TODO: arrow narrow right
+      img({
+        // src: ArrowNarrowLeftSrc,
+      }),
+    ),
+    button(
+      img({
+        // src: ArrowNarrowRightSrc,
+      }),
     ),
   );
 };

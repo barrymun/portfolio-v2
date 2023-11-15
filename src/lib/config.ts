@@ -4,6 +4,8 @@ import { GLTF, GLTFLoader } from "three/examples/jsm/Addons.js";
 import { getCheckpoint } from "utils/helpers";
 import { appState } from "utils/state";
 
+import jetGLB from "assets/img/jet.glb";
+
 let scene: THREE.Scene | undefined;
 let ambientLight: THREE.AmbientLight | undefined;
 let camera: THREE.PerspectiveCamera | undefined;
@@ -13,7 +15,7 @@ let plane: THREE.Group | undefined;
 let isLoaded: boolean = false;
 
 const gltfLoader: GLTFLoader = new GLTFLoader();
-gltfLoader.load("/jet.glb", (gltf: GLTF) => {
+gltfLoader.load(jetGLB, (gltf: GLTF) => {
   const object = gltf.scene;
   object.traverse((c) => {
     c.castShadow = true;

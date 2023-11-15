@@ -19,9 +19,9 @@ export const hoverFrequency: number = 0.003;
 export const defaultSvgAttributes = {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
-  strokeWidth: 2,
+  "stroke-width": 2,
   stroke: "currentColor",
   fill: "none",
-  strokeLinecap: "round",
-  strokeLinejoin: "round",
+  "stroke-linecap": "round",
+  "stroke-linejoin": "round",
 };

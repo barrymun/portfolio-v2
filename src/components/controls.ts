@@ -30,6 +30,7 @@ export const Controls = () => {
     button(
       {
         onclick: handlePrevious,
+        disabled: () => appState.currentProgressionIndex.val === 0 || appState.isPerformingManoeuvre.val,
       },
       img({
         // src: ArrowNarrowLeftSrc,
@@ -38,6 +39,9 @@ export const Controls = () => {
     button(
       {
         onclick: handleNext,
+        disabled: () =>
+          appState.currentProgressionIndex.val === appState.progressions.val.length ||
+          appState.isPerformingManoeuvre.val,
       },
       img({
         // src: ArrowNarrowRightSrc,

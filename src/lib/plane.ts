@@ -99,7 +99,10 @@ const performManoeuvre = async () => {
     return;
   }
 
-  if (appState.currentProgressionIndex.val >= appState.progressions.val.length) {
+  if (
+    appState.currentProgressionIndex.val >= appState.progressions.val.length ||
+    appState.currentProgressionIndex.val < 0
+  ) {
     return;
   }
 
@@ -123,7 +126,6 @@ const performManoeuvre = async () => {
     position += scrollOffset;
     await new Promise((resolve) => setTimeout(resolve, 1));
   }
-  appState.currentProgressionIndex.val += 1;
   appState.isPerformingManoeuvre.val = false;
 };
 

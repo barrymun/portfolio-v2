@@ -6,7 +6,7 @@ import {
   pitchIntensity,
   rollAmplitude,
   rollFrequency,
-  scrollOffset,
+  positionOffset,
   straightAndLevelPosition,
 } from "utils/constants";
 import { getCheckpoint } from "utils/helpers";
@@ -53,6 +53,7 @@ const movePlaneUpAndDown = (position: number) => {
 
   // Update plane position
   appState.config.val.plane.position.y = sinusoidalY;
+  appState.config.val.plane.position.x = -(sinusoidalY / 4);
 
   // Calculate the desired pitch angle based on the slope of the sine wave
   const slope = Math.sin(pitchFrequency * position);
@@ -77,6 +78,8 @@ const movePlaneLeftAndRight = (position: number) => {
 
   moveBackground(position);
 
+  const sinusoidalY = pitchAmplitude * Math.sin(pitchFrequency * position);
+  appState.config.val.plane.position.x = -(sinusoidalY / 10);
   const rollAngle = rollAmplitude * Math.sin(rollFrequency * position);
   appState.config.val.plane.rotation.z = straightAndLevelPosition - rollAngle;
 };
@@ -90,8 +93,8 @@ const performBackflip = (position: number) => {
 
   const sinusoidalY = pitchAmplitude * Math.sin(pitchFrequency * position);
   appState.config.val.plane.position.y = sinusoidalY;
-  // appState.config.val.plane.position.x = sinusoidalY; // TODO: might do something with the x-axis
-  appState.config.val.plane.rotation.y -= (scrollOffset / 1000) * 2;
+  appState.config.val.plane.position.x = -(sinusoidalY / 4);
+  appState.config.val.plane.rotation.y -= (positionOffset / 1000) * 2;
 };
 
 const performManoeuvre = async () => {
@@ -123,7 +126,7 @@ const performManoeuvre = async () => {
         performBackflip(position);
         break;
     }
-    position += scrollOffset;
+    position += positionOffset;
     await new Promise((resolve) => setTimeout(resolve, 1));
   }
   appState.isPerformingManoeuvre.val = false;

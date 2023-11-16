@@ -7,6 +7,7 @@ import { Plane } from "components/plane";
 import { initBackground, renderBackground } from "lib/background";
 import { initConfig } from "lib/config";
 import { performHover, renderPlane } from "lib/plane";
+import { positionOffset } from "utils/constants";
 
 import "assets/css/base.css";
 import "assets/css/icons.css";
@@ -30,7 +31,7 @@ const animate = () => {
   renderPlane();
 
   performHover(hoverPosition);
-  hoverPosition += 4;
+  hoverPosition += positionOffset;
 };
 
 const handleLoad = () => {

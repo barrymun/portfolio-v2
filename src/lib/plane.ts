@@ -11,7 +11,20 @@ import {
 } from "utils/constants";
 import { getCheckpoint } from "utils/helpers";
 import { appState } from "utils/state";
-import { ScrollDirection } from "utils/types";
+
+const handleDirection = () => {
+  if (!appState.config.val) {
+    return;
+  }
+
+  if (appState.planeDirection.val === "right") {
+    appState.config.val.plane.rotation.x = (-Math.PI / 180) * 90;
+    appState.config.val.plane.rotation.y = (Math.PI / 180) * 90;
+  } else {
+    appState.config.val.plane.rotation.x = (Math.PI / 180) * 90;
+    appState.config.val.plane.rotation.y = (-Math.PI / 180) * 90;
+  }
+};
 
 const performHover = (position: number) => {
   if (!appState.config.val) {
@@ -35,6 +48,8 @@ const performHover = (position: number) => {
   appState.config.val.plane.position.y -= rollAngle / 30;
   // move plane left and right slightly
   appState.config.val.plane.position.x -= rollAngle / 50;
+
+  handleDirection();
 };
 
 const moveBackground = (_position: number) => {
@@ -66,9 +81,7 @@ const movePlaneUpAndDown = (position: number) => {
   // Update plane rotation to pitch upwards or downwards
   appState.config.val.plane.rotation.y = straightAndLevelPosition - pitchAngle;
 
-  // Set the other rotation components to their original values
-  appState.config.val.plane.rotation.x = (-Math.PI / 180) * 90;
-  appState.config.val.plane.rotation.z = (Math.PI / 180) * 90;
+  handleDirection();
 };
 
 const movePlaneLeftAndRight = (position: number) => {
@@ -82,6 +95,8 @@ const movePlaneLeftAndRight = (position: number) => {
   appState.config.val.plane.position.x = -(sinusoidalY / 10);
   const rollAngle = rollAmplitude * Math.sin(rollFrequency * position);
   appState.config.val.plane.rotation.z = straightAndLevelPosition - rollAngle;
+
+  handleDirection();
 };
 
 const performBackflip = (position: number) => {
@@ -93,8 +108,26 @@ const performBackflip = (position: number) => {
 
   const sinusoidalY = pitchAmplitude * Math.sin(pitchFrequency * position);
   appState.config.val.plane.position.y = sinusoidalY;
-  appState.config.val.plane.position.x = -(sinusoidalY / 4);
-  appState.config.val.plane.rotation.y -= (positionOffset / 1000) * 2;
+
+  if (appState.planeDirection.val === "right") {
+    if (position === 0) {
+      appState.config.val.plane.rotation.y = (Math.PI / 180) * 90;
+    }
+
+    appState.config.val.plane.position.x = -(sinusoidalY / 4);
+    appState.config.val.plane.rotation.x = (-Math.PI / 180) * 90;
+
+    appState.config.val.plane.rotation.y -= (positionOffset / 1000) * 2;
+  } else {
+    if (position === 0) {
+      appState.config.val.plane.rotation.y = (-Math.PI / 180) * 90;
+    }
+
+    appState.config.val.plane.position.x = sinusoidalY / 4;
+    appState.config.val.plane.rotation.x = (Math.PI / 180) * 90;
+
+    appState.config.val.plane.rotation.y += (positionOffset / 1000) * 2;
+  }
 };
 
 const performManoeuvre = async () => {
@@ -132,14 +165,6 @@ const performManoeuvre = async () => {
   appState.isPerformingManoeuvre.val = false;
 };
 
-const setDirection = (direction: ScrollDirection) => {
-  if (!appState.config.val) {
-    return;
-  }
-
-  appState.config.val.plane.rotation.y = direction === "down" ? (Math.PI / 180) * 90 : (-Math.PI / 180) * 90;
-};
-
 const renderPlane = () => {
   if (!appState.config.val) {
     return;
@@ -164,7 +189,6 @@ export {
   movePlaneLeftAndRight,
   performBackflip,
   performManoeuvre,
-  setDirection,
   renderPlane,
   handleResizePlane,
 };

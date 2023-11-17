@@ -22,9 +22,10 @@ gltfLoader.load(jetGLB, (gltf: GLTF) => {
   });
 
   object.scale.setScalar(0.2);
+  // defaults for facing right
   object.rotation.x = (-Math.PI / 180) * 90;
-  object.rotation.z = (Math.PI / 180) * 90;
   object.rotation.y = (Math.PI / 180) * 90;
+  object.rotation.z = (Math.PI / 180) * 90;
 
   plane = object;
   scene?.add(plane);
@@ -75,15 +76,15 @@ const setupProgression = () => {
   appState.progressions.val = [
     {
       checkpoint: checkpoints[0],
-      manoeuvre: "pitch-up-down",
+      manoeuvre: "backflip",
     },
     {
       checkpoint: checkpoints[1],
-      manoeuvre: "bank-left-right",
+      manoeuvre: "pitch-up-down",
     },
     {
       checkpoint: checkpoints[2],
-      manoeuvre: "backflip",
+      manoeuvre: "bank-left-right",
     },
   ];
   appState.currentProgressionIndex.val = 0;

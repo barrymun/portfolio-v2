@@ -11,6 +11,7 @@ const { button, div, img } = van.tags;
 export const Controls = () => {
   const handlePrevious = () => {
     if (appState.currentProgressionIndex.val > 0) {
+      appState.planeDirection.val = "left";
       appState.currentProgressionIndex.val -= 1;
       performManoeuvre();
     }
@@ -18,6 +19,7 @@ export const Controls = () => {
 
   const handleNext = () => {
     if (appState.currentProgressionIndex.val < appState.progressions.val.length) {
+      appState.planeDirection.val = "right";
       performManoeuvre();
       appState.currentProgressionIndex.val += 1;
     }

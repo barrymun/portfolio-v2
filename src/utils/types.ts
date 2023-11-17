@@ -8,8 +8,6 @@ export interface Config {
   plane: THREE.Group;
 }
 
-export type ScrollDirection = "down" | "up";
-
 export type PlaneDirection = "right" | "left";
 
 export type PlaneManoeuvre = "pitch-up-down" | "bank-left-right" | "backflip";

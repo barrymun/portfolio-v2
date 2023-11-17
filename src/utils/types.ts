@@ -3,8 +3,8 @@ import { State } from "vanjs-core";
 
 export interface Config {
   scene: THREE.Scene;
-  camera: THREE.Camera;
-  renderer: THREE.Renderer;
+  camera: THREE.PerspectiveCamera;
+  renderer: THREE.WebGLRenderer;
   plane: THREE.Group;
 }
 

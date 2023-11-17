@@ -4,9 +4,9 @@ import { ForkMe } from "components/fork-me";
 import { Background } from "components/background";
 import { Controls } from "components/controls";
 import { Plane } from "components/plane";
-import { initBackground, renderBackground } from "lib/background";
+import { handleResizeBackground, initBackground, renderBackground } from "lib/background";
 import { initConfig } from "lib/config";
-import { performHover, renderPlane } from "lib/plane";
+import { handleResizePlane, performHover, renderPlane } from "lib/plane";
 import { positionOffset } from "utils/constants";
 
 import "assets/css/base.css";
@@ -40,10 +40,17 @@ const handleLoad = () => {
   animate();
 };
 
+const handleResize = () => {
+  handleResizeBackground();
+  handleResizePlane();
+};
+
 const handleUnload = () => {
   window.removeEventListener("load", handleLoad);
   window.removeEventListener("unload", handleUnload);
+  window.removeEventListener("resize", handleResize);
 };
 
 window.addEventListener("load", handleLoad);
 window.addEventListener("unload", handleUnload);
+window.addEventListener("resize", handleResize);

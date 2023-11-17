@@ -7,8 +7,8 @@ canvas.height = window.innerHeight;
 const ctx = canvas.getContext("2d")!;
 const numStars: number = 400;
 const interactionDistance: number = 100; // px
-const stars: Star[] = [];
 
+let stars: Star[] = [];
 let mousePosition: { x: number; y: number } | undefined = undefined;
 
 const drawStars = () => {
@@ -100,4 +100,15 @@ const renderBackground = () => {
   moveStars();
 };
 
-export { initBackground, renderBackground };
+const handleResizeBackground = () => {
+  // reset canvas
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // reset stars
+  stars = [];
+  // reinitialize
+  initBackground();
+};
+
+export { initBackground, renderBackground, handleResizeBackground };

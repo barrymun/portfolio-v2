@@ -54,7 +54,10 @@ const setupRenderer = () => {
 
   camera.updateProjectionMatrix();
 
-  renderer = new THREE.WebGLRenderer({ alpha: true });
+  renderer = new THREE.WebGLRenderer({
+    alpha: true,
+    antialias: true,
+  });
   // renderer.setClearColor(0xff0000, 1); // red
   // renderer.setClearColor(0xffffff, 1); // white
   renderer.setClearColor(0x000000, 0); // transparent

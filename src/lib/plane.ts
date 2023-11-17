@@ -148,6 +148,16 @@ const renderPlane = () => {
   appState.config.val.renderer.render(appState.config.val.scene, appState.config.val.camera);
 };
 
+const handleResizePlane = () => {
+  if (!appState.config.val) {
+    return;
+  }
+
+  appState.config.val.camera.aspect = window.innerWidth / window.innerHeight;
+  appState.config.val.camera.updateProjectionMatrix();
+  appState.config.val.renderer.setSize(window.innerWidth, window.innerHeight);
+};
+
 export {
   performHover,
   movePlaneUpAndDown,
@@ -156,4 +166,5 @@ export {
   performManoeuvre,
   setDirection,
   renderPlane,
+  handleResizePlane,
 };

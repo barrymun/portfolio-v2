@@ -1,6 +1,6 @@
 import van from "vanjs-core";
 
-import { performManoeuvre } from "lib/plane";
+import { performManoeuvre, turnPlane } from "lib/plane";
 import { appState } from "utils/state";
 
 // import ArrowNarrowLeftSrc from "@tabler/icons/arrow-narrow-left.svg";
@@ -9,7 +9,10 @@ import { appState } from "utils/state";
 const { button, div, img } = van.tags;
 
 export const Controls = () => {
-  const handlePrevious = () => {
+  const handlePrevious = async () => {
+    if (appState.planeDirection.val === "right") {
+      await turnPlane();
+    }
     if (appState.currentProgressionIndex.val > 0) {
       appState.planeDirection.val = "left";
       appState.currentProgressionIndex.val -= 1;
@@ -17,7 +20,10 @@ export const Controls = () => {
     }
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    if (appState.planeDirection.val === "left") {
+      await turnPlane();
+    }
     if (appState.currentProgressionIndex.val < appState.progressions.val.length) {
       appState.planeDirection.val = "right";
       performManoeuvre();

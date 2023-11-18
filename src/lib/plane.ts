@@ -10,6 +10,7 @@ import {
   rollFrequency,
   positionOffset,
   straightAndLevelPosition,
+  turnOffset,
 } from "utils/constants";
 import { getCheckpoint } from "utils/helpers";
 import { appState } from "utils/state";
@@ -49,6 +50,33 @@ const performHover = (position: number) => {
 
 const moveBackground = (_position: number) => {
   // TODO: move background
+};
+
+const turnPlane = async () => {
+  if (!appState.config.val) {
+    return;
+  }
+
+  // start performing the manoeuvre
+  appState.isPerformingManoeuvre.val = true;
+
+  // set plane rotation on y and z axis to 0
+  appState.config.val.plane.rotation.x = 0;
+  appState.config.val.plane.rotation.z = 0;
+
+  let counter: number = 0;
+  while (counter < 3) {
+    counter += turnOffset;
+    appState.config.val.plane.rotation.y -= orientationSign * turnOffset; // right to left
+    await new Promise((resolve) => setTimeout(resolve, 1));
+  }
+
+  // reset plane rotation on y and z axis
+  appState.config.val.plane.rotation.y = (Math.PI / 180) * 90;
+  appState.config.val.plane.rotation.z = (Math.PI / 180) * 90;
+
+  // end performing the manoeuvre
+  appState.isPerformingManoeuvre.val = false;
 };
 
 const movePlaneUpAndDown = (position: number) => {
@@ -172,6 +200,7 @@ const handleResizePlane = () => {
 
 export {
   performHover,
+  turnPlane,
   movePlaneUpAndDown,
   movePlaneLeftAndRight,
   performBackflip,

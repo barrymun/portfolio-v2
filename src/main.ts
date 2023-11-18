@@ -34,9 +34,9 @@ const animate = () => {
   hoverPosition += positionOffset;
 };
 
-const handleLoad = () => {
+const handleLoad = async () => {
+  await initConfig();
   initBackground();
-  initConfig();
   animate();
 };
 

@@ -20,15 +20,6 @@ van.derive(() => {
   orientationSign = appState.planeDirection.val === "right" ? 1 : -1;
 });
 
-const handleDirection = () => {
-  if (!appState.config.val) {
-    return;
-  }
-
-  appState.config.val.plane.rotation.x = ((orientationSign * -Math.PI) / 180) * 90;
-  appState.config.val.plane.rotation.y = ((orientationSign * Math.PI) / 180) * 90;
-};
-
 const performHover = (position: number) => {
   if (!appState.config.val) {
     return;
@@ -52,7 +43,8 @@ const performHover = (position: number) => {
   // move plane left and right slightly
   appState.config.val.plane.position.x -= rollAngle / 50;
 
-  handleDirection();
+  appState.config.val.plane.rotation.x = ((orientationSign * -Math.PI) / 180) * 90;
+  appState.config.val.plane.rotation.y = ((orientationSign * Math.PI) / 180) * 90;
 };
 
 const moveBackground = (_position: number) => {
@@ -82,9 +74,8 @@ const movePlaneUpAndDown = (position: number) => {
   pitchAngle *= Math.PI / 360; // Convert degrees to radians for smoother transition
 
   // Update plane rotation to pitch upwards or downwards
-  appState.config.val.plane.rotation.y = straightAndLevelPosition - pitchAngle;
-
-  handleDirection();
+  appState.config.val.plane.rotation.y = orientationSign * straightAndLevelPosition - pitchAngle;
+  appState.config.val.plane.rotation.x = ((orientationSign * -Math.PI) / 180) * 90;
 };
 
 const movePlaneLeftAndRight = (position: number) => {
@@ -99,7 +90,8 @@ const movePlaneLeftAndRight = (position: number) => {
   const rollAngle = rollAmplitude * Math.sin(rollFrequency * position);
   appState.config.val.plane.rotation.z = straightAndLevelPosition - rollAngle;
 
-  handleDirection();
+  appState.config.val.plane.rotation.x = ((orientationSign * -Math.PI) / 180) * 90;
+  appState.config.val.plane.rotation.y = ((orientationSign * Math.PI) / 180) * 90;
 };
 
 const performBackflip = (position: number) => {
@@ -111,11 +103,6 @@ const performBackflip = (position: number) => {
 
   const sinusoidalY = pitchAmplitude * Math.sin(pitchFrequency * position);
   appState.config.val.plane.position.y = sinusoidalY;
-
-  // ensure correct direction for the first frame
-  if (position === 0) {
-    appState.config.val.plane.rotation.y = ((orientationSign * Math.PI) / 180) * 90;
-  }
 
   appState.config.val.plane.position.x = -((orientationSign * sinusoidalY) / 4);
   appState.config.val.plane.rotation.x = ((orientationSign * -Math.PI) / 180) * 90;
@@ -138,7 +125,12 @@ const performManoeuvre = async () => {
   const manoeuvre = appState.progressions.val[appState.currentProgressionIndex.val].manoeuvre;
   const checkpoint = getCheckpoint(manoeuvre);
 
+  // start performing the manoeuvre
   appState.isPerformingManoeuvre.val = true;
+
+  // ensure correct direction for the first frame
+  appState.config.val.plane.rotation.y = ((orientationSign * Math.PI) / 180) * 90;
+
   let position: number = 0;
   while (position < checkpoint) {
     switch (manoeuvre) {
@@ -155,6 +147,8 @@ const performManoeuvre = async () => {
     position += positionOffset;
     await new Promise((resolve) => setTimeout(resolve, 1));
   }
+
+  // end performing the manoeuvre
   appState.isPerformingManoeuvre.val = false;
 };
 

@@ -1,3 +1,5 @@
+import van from "vanjs-core";
+
 import {
   hoverAmplitude,
   hoverFrequency,
@@ -12,18 +14,19 @@ import {
 import { getCheckpoint } from "utils/helpers";
 import { appState } from "utils/state";
 
+// determine the sign to apply to various properties based on the plane's orientation
+let orientationSign: number = appState.planeDirection.val === "right" ? 1 : -1;
+van.derive(() => {
+  orientationSign = appState.planeDirection.val === "right" ? 1 : -1;
+});
+
 const handleDirection = () => {
   if (!appState.config.val) {
     return;
   }
 
-  if (appState.planeDirection.val === "right") {
-    appState.config.val.plane.rotation.x = (-Math.PI / 180) * 90;
-    appState.config.val.plane.rotation.y = (Math.PI / 180) * 90;
-  } else {
-    appState.config.val.plane.rotation.x = (Math.PI / 180) * 90;
-    appState.config.val.plane.rotation.y = (-Math.PI / 180) * 90;
-  }
+  appState.config.val.plane.rotation.x = ((orientationSign * -Math.PI) / 180) * 90;
+  appState.config.val.plane.rotation.y = ((orientationSign * Math.PI) / 180) * 90;
 };
 
 const performHover = (position: number) => {
@@ -109,25 +112,15 @@ const performBackflip = (position: number) => {
   const sinusoidalY = pitchAmplitude * Math.sin(pitchFrequency * position);
   appState.config.val.plane.position.y = sinusoidalY;
 
-  if (appState.planeDirection.val === "right") {
-    if (position === 0) {
-      appState.config.val.plane.rotation.y = (Math.PI / 180) * 90;
-    }
-
-    appState.config.val.plane.position.x = -(sinusoidalY / 4);
-    appState.config.val.plane.rotation.x = (-Math.PI / 180) * 90;
-
-    appState.config.val.plane.rotation.y -= (positionOffset / 1000) * 2;
-  } else {
-    if (position === 0) {
-      appState.config.val.plane.rotation.y = (-Math.PI / 180) * 90;
-    }
-
-    appState.config.val.plane.position.x = sinusoidalY / 4;
-    appState.config.val.plane.rotation.x = (Math.PI / 180) * 90;
-
-    appState.config.val.plane.rotation.y += (positionOffset / 1000) * 2;
+  // ensure correct direction for the first frame
+  if (position === 0) {
+    appState.config.val.plane.rotation.y = ((orientationSign * Math.PI) / 180) * 90;
   }
+
+  appState.config.val.plane.position.x = -((orientationSign * sinusoidalY) / 4);
+  appState.config.val.plane.rotation.x = ((orientationSign * -Math.PI) / 180) * 90;
+
+  appState.config.val.plane.rotation.y -= (positionOffset / 1000) * 2;
 };
 
 const performManoeuvre = async () => {

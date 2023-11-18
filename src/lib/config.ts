@@ -34,7 +34,6 @@ gltfLoader.load(jetGLB, (gltf: GLTF) => {
 
 const setupRenderer = () => {
   scene = new THREE.Scene();
-  // ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
   ambientLight = new THREE.AmbientLight(new THREE.Color("hsl(0, 0%, 100%)"), 1.0);
   scene.add(ambientLight);
 
@@ -49,9 +48,9 @@ const setupRenderer = () => {
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
   scene.add(camera);
   pointLight = new THREE.PointLight(0xffffff, 0.8);
-  // camera.add(pointLight);
   pointLight.position.set(50, 50, 50);
-  scene.add(pointLight);
+  camera.add(pointLight);
+  // scene.add(pointLight);
 
   camera.updateProjectionMatrix();
 
@@ -59,8 +58,6 @@ const setupRenderer = () => {
     alpha: true,
     antialias: true,
   });
-  // renderer.setClearColor(0xff0000, 1); // red
-  // renderer.setClearColor(0xffffff, 1); // white
   renderer.setClearColor(0x000000, 0); // transparent
   renderer.setSize(window.innerWidth, window.innerHeight);
 };

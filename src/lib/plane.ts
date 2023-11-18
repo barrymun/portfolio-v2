@@ -52,7 +52,7 @@ const moveBackground = (_position: number) => {
   // TODO: move background
 };
 
-const turnPlane = async () => {
+const turnPlane = async (resetOldRotations: boolean) => {
   if (!appState.config.val) {
     return;
   }
@@ -61,19 +61,23 @@ const turnPlane = async () => {
   appState.isPerformingManoeuvre.val = true;
 
   // set plane rotation on y and z axis to 0
+  const planeRotationY = appState.config.val.plane.rotation.y;
+  const planeRotationZ = appState.config.val.plane.rotation.z;
   appState.config.val.plane.rotation.x = 0;
   appState.config.val.plane.rotation.z = 0;
 
   let counter: number = 0;
   while (counter < 3) {
     counter += turnOffset;
-    appState.config.val.plane.rotation.y -= orientationSign * turnOffset; // right to left
+    appState.config.val.plane.rotation.y -= orientationSign * turnOffset;
     await new Promise((resolve) => setTimeout(resolve, 1));
   }
 
   // reset plane rotation on y and z axis
-  appState.config.val.plane.rotation.y = (Math.PI / 180) * 90;
-  appState.config.val.plane.rotation.z = (Math.PI / 180) * 90;
+  if (resetOldRotations) {
+    appState.config.val.plane.rotation.y = planeRotationY;
+    appState.config.val.plane.rotation.z = planeRotationZ;
+  }
 
   // end performing the manoeuvre
   appState.isPerformingManoeuvre.val = false;

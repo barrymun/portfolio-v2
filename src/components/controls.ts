@@ -10,24 +10,38 @@ const { button, div, img } = van.tags;
 
 export const Controls = () => {
   const handlePrevious = async () => {
+    // user needs to face left if going backwards
     if (appState.planeDirection.val === "right") {
-      await turnPlane();
+      await turnPlane(true);
     }
     if (appState.currentProgressionIndex.val > 0) {
       appState.planeDirection.val = "left";
       appState.currentProgressionIndex.val -= 1;
-      performManoeuvre();
+      await performManoeuvre();
+    }
+    // if the user is at the beginning of the progression, turn the plane around
+    if (appState.currentProgressionIndex.val === 0) {
+      await turnPlane(false);
+      // set this after the turn so that the plane faces the right way
+      appState.planeDirection.val = "right";
     }
   };
 
   const handleNext = async () => {
+    // user needs to face right if going forwards
     if (appState.planeDirection.val === "left") {
-      await turnPlane();
+      await turnPlane(true);
     }
     if (appState.currentProgressionIndex.val < appState.progressions.val.length) {
       appState.planeDirection.val = "right";
-      performManoeuvre();
+      await performManoeuvre();
       appState.currentProgressionIndex.val += 1;
+    }
+    // if the user is at the end of the progression, turn the plane around
+    if (appState.currentProgressionIndex.val === appState.progressions.val.length) {
+      await turnPlane(false);
+      // set this after the turn so that the plane faces the right way
+      appState.planeDirection.val = "left";
     }
   };
 

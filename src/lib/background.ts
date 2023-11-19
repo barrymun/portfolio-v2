@@ -31,6 +31,13 @@ const drawStars = () => {
 };
 
 const moveStars = () => {
+  // use closure here to avoid repeating the same code
+  const revertToOriginalPosition = (star: Star) => {
+    // revert to the original position
+    star.x += (star.originalX - star.x) * 0.02;
+    star.y += (star.originalY - star.y) * 0.02;
+  };
+
   for (const star of stars) {
     // move the stars, including wrapping around the screen
     star.x += orientationSign * appState.starMovementSpeed.val;
@@ -49,11 +56,12 @@ const moveStars = () => {
     }
 
     if (!mousePosition) {
+      revertToOriginalPosition(star);
+      // we want to exit early here
       continue;
     }
 
     const distance = Math.sqrt((star.x - mousePosition.x) ** 2 + (star.y - mousePosition.y) ** 2);
-
     if (distance < interactionDistance) {
       // move the stars in a circular path outside the interaction distance
       const angle = Math.atan2(star.y - mousePosition.y, star.x - mousePosition.x);
@@ -67,9 +75,7 @@ const moveStars = () => {
       star.x += (targetX - star.x) * 0.02;
       star.y += (targetY - star.y) * 0.02;
     } else {
-      // revert to the original position
-      star.x += (star.originalX - star.x) * 0.02;
-      star.y += (star.originalY - star.y) * 0.02;
+      revertToOriginalPosition(star);
     }
   }
 };
@@ -98,7 +104,9 @@ const handleMouseMove = (e: MouseEvent) => {
   };
 };
 
-canvas.addEventListener("mousemove", handleMouseMove);
+const handleMouseLeave = () => {
+  mousePosition = undefined;
+};
 
 const initBackground = () => {
   // create random stars
@@ -135,5 +143,8 @@ const handleResizeBackground = () => {
   // reinitialize
   initBackground();
 };
+
+canvas.addEventListener("mousemove", handleMouseMove);
+canvas.addEventListener("mouseleave", handleMouseLeave);
 
 export { initBackground, renderBackground, handleResizeBackground };

@@ -22,7 +22,7 @@ export const Controls = () => {
     // if the user is at the beginning of the progression, turn the plane around
     if (appState.currentProgressionIndex.val === 0) {
       await turnPlane(false);
-      // set this after the turn so that the plane faces the right way
+      // set this after the turn so that the plane faces the correct way
       appState.planeDirection.val = "right";
     }
   };
@@ -40,7 +40,7 @@ export const Controls = () => {
     // if the user is at the end of the progression, turn the plane around
     if (appState.currentProgressionIndex.val === appState.progressions.val.length) {
       await turnPlane(false);
-      // set this after the turn so that the plane faces the right way
+      // set this after the turn so that the plane faces the correct way
       appState.planeDirection.val = "left";
     }
   };

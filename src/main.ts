@@ -8,6 +8,7 @@ import { handleResizeBackground, initBackground, renderBackground } from "lib/ba
 import { initConfig } from "lib/config";
 import { handleResizePlane, performHover, renderPlane } from "lib/plane";
 import { positionOffset } from "utils/constants";
+import { appState } from "utils/state";
 
 import "assets/css/base.css";
 import "assets/css/icons.css";
@@ -23,6 +24,11 @@ van.add(dom, Plane());
 van.add(dom, Controls());
 
 let hoverPosition: number = 0;
+van.derive(() => {
+  if (appState.isPerformingManoeuvre.val) {
+    hoverPosition = 0;
+  }
+});
 
 const animate = () => {
   requestAnimationFrame(animate);

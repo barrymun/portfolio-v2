@@ -1,3 +1,6 @@
+import van from "vanjs-core";
+
+import { starSpeedFast, starSpeedNormal } from "utils/constants";
 import { appState } from "utils/state";
 import { Star } from "utils/types";
 
@@ -8,8 +11,14 @@ const ctx = canvas.getContext("2d")!;
 const numStars: number = 400;
 const interactionDistance: number = 100; // px
 
+let orientationSign: number = appState.planeDirection.val === "right" ? -1 : 1;
 let stars: Star[] = [];
 let mousePosition: { x: number; y: number } | undefined = undefined;
+
+van.derive(() => {
+  orientationSign = appState.planeDirection.val === "right" ? -1 : 1;
+  appState.starMovementSpeed.val = appState.isPerformingManoeuvre.val ? starSpeedFast : starSpeedNormal;
+});
 
 const drawStars = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -22,11 +31,27 @@ const drawStars = () => {
 };
 
 const moveStars = () => {
-  if (!mousePosition) {
-    return;
-  }
-
   for (const star of stars) {
+    // move the stars, including wrapping around the screen
+    star.x += orientationSign * appState.starMovementSpeed.val;
+    if (star.x > canvas.width) {
+      star.x = 0;
+    } else if (star.x < 0) {
+      star.x = canvas.width;
+    }
+
+    // also handle the original position
+    star.originalX += orientationSign * appState.starMovementSpeed.val;
+    if (star.originalX > canvas.width) {
+      star.originalX = 0;
+    } else if (star.originalX < 0) {
+      star.originalX = canvas.width;
+    }
+
+    if (!mousePosition) {
+      continue;
+    }
+
     const distance = Math.sqrt((star.x - mousePosition.x) ** 2 + (star.y - mousePosition.y) ** 2);
 
     if (distance < interactionDistance) {

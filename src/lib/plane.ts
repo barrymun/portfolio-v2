@@ -48,10 +48,6 @@ const performHover = (position: number) => {
   appState.config.val.plane.rotation.y = ((orientationSign * Math.PI) / 180) * 90;
 };
 
-const moveBackground = (_position: number) => {
-  // TODO: move background
-};
-
 const turnPlane = async (resetOldRotations: boolean) => {
   if (!appState.config.val) {
     return;
@@ -88,8 +84,6 @@ const movePlaneUpAndDown = (position: number) => {
     return;
   }
 
-  moveBackground(position);
-
   // Sinusoidal position calculation for y-axis
   const sinusoidalY = pitchAmplitude * Math.sin(pitchFrequency * position);
 
@@ -115,8 +109,6 @@ const movePlaneLeftAndRight = (position: number) => {
     return;
   }
 
-  moveBackground(position);
-
   const sinusoidalY = pitchAmplitude * Math.sin(pitchFrequency * position);
   appState.config.val.plane.position.x = -(sinusoidalY / 10);
   const rollAngle = rollAmplitude * Math.sin(rollFrequency * position);
@@ -130,8 +122,6 @@ const performBackflip = (position: number) => {
   if (!appState.config.val) {
     return;
   }
-
-  moveBackground(position);
 
   const sinusoidalY = pitchAmplitude * Math.sin(pitchFrequency * position);
   appState.config.val.plane.position.y = sinusoidalY;

@@ -17,6 +17,9 @@ export const hoverAmplitude: number = (Math.PI / 180) * 5;
 export const hoverFrequency: number = 0.003;
 // constants for the turn motion
 export const turnOffset: number = 0.01;
+// constants for stars
+export const starSpeedNormal: number = 0.3;
+export const starSpeedFast: number = 5.0;
 
 export const defaultSvgAttributes = {
   xmlns: "http://www.w3.org/2000/svg",

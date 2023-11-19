@@ -25,7 +25,8 @@ van.add(dom, Controls());
 
 let hoverPosition: number = 0;
 van.derive(() => {
-  if (appState.isPerformingManoeuvre.val) {
+  // reset the hover position when manoeuvre is complete
+  if (!appState.isPerformingManoeuvre.val) {
     hoverPosition = 0;
   }
 });

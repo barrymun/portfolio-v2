@@ -21,11 +21,12 @@ van.derive(() => {
 });
 
 const drawStars = () => {
+  const starRadius = window.innerWidth <= 768 ? 1.0 : 2.0;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = "white";
   for (const star of stars) {
     ctx.beginPath();
-    ctx.arc(star.x, star.y, 2, 0, Math.PI * 2);
+    ctx.arc(star.x, star.y, starRadius, 0, Math.PI * 2);
     ctx.fill();
   }
 };

@@ -11,6 +11,7 @@ import {
   positionOffset,
   straightAndLevelPosition,
   turnOffset,
+  turnBankAngle,
 } from "utils/constants";
 import { getCheckpoint } from "utils/helpers";
 import { appState } from "utils/state";
@@ -56,16 +57,23 @@ const turnPlane = async (resetOldRotations: boolean) => {
   // start performing the manoeuvre
   appState.isPerformingManoeuvre.val = true;
 
-  // set plane rotation on y and z axis to 0
+  // save the old plane rotation on y and z axis
   const planeRotationY = appState.config.val.plane.rotation.y;
   const planeRotationZ = appState.config.val.plane.rotation.z;
+  // set plane rotation on y and z axis to 0
   appState.config.val.plane.rotation.x = 0;
   appState.config.val.plane.rotation.z = 0;
 
   let counter: number = 0;
   while (counter < 3) {
     counter += turnOffset;
+    // turn
     appState.config.val.plane.rotation.y -= orientationSign * turnOffset;
+    // handle angle of bank
+    const currentBankAngle = (counter > 1.5 ? 3 - counter : counter) * 25;
+    const finalBankAngle = Math.min(currentBankAngle, turnBankAngle);
+    appState.config.val.plane.rotation.z = ((orientationSign * Math.PI) / 180) * finalBankAngle;
+    // slight delay for smoother animation
     await new Promise((resolve) => setTimeout(resolve, 1));
   }
 

@@ -1,6 +1,6 @@
 import van from "vanjs-core";
 
-import { performManoeuvre, turnPlane } from "lib/craft";
+import { performManoeuvre, turnPlane } from "lib/scene";
 import { appState } from "utils/state";
 
 // import ArrowNarrowLeftSrc from "@tabler/icons/arrow-narrow-left.svg";

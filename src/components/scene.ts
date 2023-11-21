@@ -4,10 +4,10 @@ import { appState } from "utils/state";
 
 const { div } = van.tags;
 
-export const Craft = () => {
+export const Scene = () => {
   return div(
     {
-      class: "craft",
+      class: "scene",
     },
     () => div(appState.config.val && appState.config.val.renderer.domElement),
   );

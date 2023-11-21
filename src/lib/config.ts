@@ -3,7 +3,7 @@ import { GLTF, GLTFLoader } from "three/examples/jsm/Addons.js";
 
 import { getCheckpoint } from "utils/helpers";
 import { appState } from "utils/state";
-import { PlaneManoeuvre } from "utils/types";
+import { CraftManoeuvre } from "utils/types";
 
 import jetGLB from "assets/img/jet.glb";
 import dockGLB from "assets/img/dock.glb";
@@ -88,7 +88,7 @@ const setupRenderer = () => {
 
 const setupProgression = () => {
   // TODO: rework based on the number of projects added
-  const checkpoints: PlaneManoeuvre[] = ["pitch-up-down", "bank-left-right", "backflip"];
+  const checkpoints: CraftManoeuvre[] = ["pitch-up-down", "bank-left-right", "backflip"];
 
   const progressions = [];
   for (const checkpoint of checkpoints) {

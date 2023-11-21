@@ -1,11 +1,11 @@
 import { flipFrequency, pitchFrequency, rollFrequency } from "utils/constants";
-import { PlaneManoeuvre } from "utils/types";
+import { CraftManoeuvre } from "utils/types";
 
 export const getPeriod = (frequency: number): number => {
   return (2 * Math.PI) / Math.abs(frequency);
 };
 
-export const getCheckpoint = (type: PlaneManoeuvre) => {
+export const getCheckpoint = (type: CraftManoeuvre) => {
   let res: number = 0;
   switch (type) {
     case "pitch-up-down":

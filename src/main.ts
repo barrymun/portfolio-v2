@@ -6,7 +6,7 @@ import { Controls } from "components/controls";
 import { Scene } from "components/scene";
 import { handleResizeBackground, initBackground, renderBackground } from "lib/background";
 import { initConfig } from "lib/config";
-import { handleResizePlane, performHover, renderPlane } from "lib/scene";
+import { handleResizeCraft, performHover, renderCraft } from "lib/scene";
 import { positionOffset } from "utils/constants";
 import { appState } from "utils/state";
 
@@ -35,7 +35,7 @@ const animate = () => {
   requestAnimationFrame(animate);
 
   renderBackground();
-  renderPlane();
+  renderCraft();
 
   performHover(hoverPosition);
   hoverPosition += positionOffset;
@@ -49,7 +49,7 @@ const handleLoad = async () => {
 
 const handleResize = () => {
   handleResizeBackground();
-  handleResizePlane();
+  handleResizeCraft();
 };
 
 const handleUnload = () => {

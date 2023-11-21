@@ -17,9 +17,9 @@ import { getCheckpoint } from "utils/helpers";
 import { appState } from "utils/state";
 
 // determine the sign to apply to various properties based on the craft's orientation
-let orientationSign: number = appState.planeDirection.val === "right" ? 1 : -1;
+let orientationSign: number = appState.craftDirection.val === "right" ? 1 : -1;
 van.derive(() => {
-  orientationSign = appState.planeDirection.val === "right" ? 1 : -1;
+  orientationSign = appState.craftDirection.val === "right" ? 1 : -1;
 });
 
 const performHover = (position: number) => {
@@ -49,7 +49,7 @@ const performHover = (position: number) => {
   appState.config.val.craft.rotation.y = ((orientationSign * Math.PI) / 180) * 90;
 };
 
-const turnPlane = async (resetOldRotations: boolean) => {
+const turnCraft = async (resetOldRotations: boolean) => {
   if (!appState.config.val) {
     return;
   }
@@ -58,8 +58,8 @@ const turnPlane = async (resetOldRotations: boolean) => {
   appState.isPerformingManoeuvre.val = true;
 
   // save the old craft rotation on y and z axis
-  const planeRotationY = appState.config.val.craft.rotation.y;
-  const planeRotationZ = appState.config.val.craft.rotation.z;
+  const craftRotationY = appState.config.val.craft.rotation.y;
+  const craftRotationZ = appState.config.val.craft.rotation.z;
   // set craft rotation on y and z axis to 0
   appState.config.val.craft.rotation.x = 0;
   appState.config.val.craft.rotation.z = 0;
@@ -79,15 +79,15 @@ const turnPlane = async (resetOldRotations: boolean) => {
 
   // reset craft rotation on y and z axis
   if (resetOldRotations) {
-    appState.config.val.craft.rotation.y = planeRotationY;
-    appState.config.val.craft.rotation.z = planeRotationZ;
+    appState.config.val.craft.rotation.y = craftRotationY;
+    appState.config.val.craft.rotation.z = craftRotationZ;
   }
 
   // end performing the manoeuvre
   appState.isPerformingManoeuvre.val = false;
 };
 
-const movePlaneUpAndDown = (position: number) => {
+const moveCraftUpAndDown = (position: number) => {
   if (!appState.config.val) {
     return;
   }
@@ -112,7 +112,7 @@ const movePlaneUpAndDown = (position: number) => {
   appState.config.val.craft.rotation.x = ((orientationSign * -Math.PI) / 180) * 90;
 };
 
-const movePlaneLeftAndRight = (position: number) => {
+const moveCraftLeftAndRight = (position: number) => {
   if (!appState.config.val) {
     return;
   }
@@ -165,10 +165,10 @@ const performManoeuvre = async () => {
   while (position < checkpoint) {
     switch (manoeuvre) {
       case "pitch-up-down":
-        movePlaneUpAndDown(position);
+        moveCraftUpAndDown(position);
         break;
       case "bank-left-right":
-        movePlaneLeftAndRight(position);
+        moveCraftLeftAndRight(position);
         break;
       case "backflip":
         performBackflip(position);
@@ -182,7 +182,7 @@ const performManoeuvre = async () => {
   appState.isPerformingManoeuvre.val = false;
 };
 
-const renderPlane = () => {
+const renderCraft = () => {
   if (!appState.config.val) {
     return;
   }
@@ -190,7 +190,7 @@ const renderPlane = () => {
   appState.config.val.renderer.render(appState.config.val.scene, appState.config.val.camera);
 };
 
-const handleResizePlane = () => {
+const handleResizeCraft = () => {
   if (!appState.config.val) {
     return;
   }
@@ -202,11 +202,11 @@ const handleResizePlane = () => {
 
 export {
   performHover,
-  turnPlane,
-  movePlaneUpAndDown,
-  movePlaneLeftAndRight,
+  turnCraft,
+  moveCraftUpAndDown,
+  moveCraftLeftAndRight,
   performBackflip,
   performManoeuvre,
-  renderPlane,
-  handleResizePlane,
+  renderCraft,
+  handleResizeCraft,
 };

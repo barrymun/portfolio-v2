@@ -1,6 +1,6 @@
 import van from "vanjs-core";
 
-import { performManoeuvre, turnPlane } from "lib/scene";
+import { performManoeuvre, turnCraft } from "lib/scene";
 import { appState } from "utils/state";
 
 // import ArrowNarrowLeftSrc from "@tabler/icons/arrow-narrow-left.svg";
@@ -11,37 +11,37 @@ const { button, div, img } = van.tags;
 export const Controls = () => {
   const handlePrevious = async () => {
     // user needs to face left if going backwards
-    if (appState.planeDirection.val === "right") {
-      await turnPlane(true);
+    if (appState.craftDirection.val === "right") {
+      await turnCraft(true);
     }
     if (appState.currentProgressionIndex.val > 0) {
-      appState.planeDirection.val = "left";
+      appState.craftDirection.val = "left";
       appState.currentProgressionIndex.val -= 1;
       await performManoeuvre();
     }
     // if the user is at the beginning of the progression, turn the craft around
     if (appState.currentProgressionIndex.val === 0) {
-      await turnPlane(false);
+      await turnCraft(false);
       // set this after the turn so that the craft faces the correct way
-      appState.planeDirection.val = "right";
+      appState.craftDirection.val = "right";
     }
   };
 
   const handleNext = async () => {
     // user needs to face right if going forwards
-    if (appState.planeDirection.val === "left") {
-      await turnPlane(true);
+    if (appState.craftDirection.val === "left") {
+      await turnCraft(true);
     }
     if (appState.currentProgressionIndex.val < appState.progressions.val.length) {
-      appState.planeDirection.val = "right";
+      appState.craftDirection.val = "right";
       await performManoeuvre();
       appState.currentProgressionIndex.val += 1;
     }
     // if the user is at the end of the progression, turn the craft around
     if (appState.currentProgressionIndex.val === appState.progressions.val.length) {
-      await turnPlane(false);
+      await turnCraft(false);
       // set this after the turn so that the craft faces the correct way
-      appState.planeDirection.val = "left";
+      appState.craftDirection.val = "left";
     }
   };
 

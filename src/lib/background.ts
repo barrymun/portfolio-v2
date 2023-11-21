@@ -11,12 +11,12 @@ const ctx = canvas.getContext("2d")!;
 const numStars: number = 400;
 const interactionDistance: number = 100; // px
 
-let orientationSign: number = appState.planeDirection.val === "right" ? -1 : 1;
+let orientationSign: number = appState.craftDirection.val === "right" ? -1 : 1;
 let stars: Star[] = [];
 let mousePosition: { x: number; y: number } | undefined = undefined;
 
 van.derive(() => {
-  orientationSign = appState.planeDirection.val === "right" ? -1 : 1;
+  orientationSign = appState.craftDirection.val === "right" ? -1 : 1;
   appState.starMovementSpeed.val = appState.isPerformingManoeuvre.val ? starSpeedFast : starSpeedNormal;
 });
 

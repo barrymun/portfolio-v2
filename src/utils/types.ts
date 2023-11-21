@@ -11,13 +11,13 @@ export interface Config {
   dock: THREE.Group;
 }
 
-export type PlaneDirection = "right" | "left";
+export type CraftDirection = "right" | "left";
 
-export type PlaneManoeuvre = "pitch-up-down" | "bank-left-right" | "backflip";
+export type CraftManoeuvre = "pitch-up-down" | "bank-left-right" | "backflip";
 
 export type Progression = {
   checkpoint: number;
-  manoeuvre: PlaneManoeuvre;
+  manoeuvre: CraftManoeuvre;
 };
 
 export type Star = {
@@ -33,7 +33,7 @@ export interface AppState {
   background: State<HTMLCanvasElement | undefined>;
   config: State<Config | undefined>;
   isPerformingManoeuvre: State<boolean>;
-  planeDirection: State<PlaneDirection>;
+  craftDirection: State<CraftDirection>;
   progressions: State<Progression[]>;
   currentProgressionIndex: State<number>;
   starMovementSpeed: State<StarSpeed>;

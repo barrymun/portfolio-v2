@@ -18,6 +18,7 @@ export const hoverFrequency: number = 0.003;
 // constants for the turn motion
 export const turnOffset: number = 0.01;
 export const turnBankAngle: number = 30;
+export const turnFullRotation: number = Math.PI;
 // constants for stars
 export const starSpeedNormal: number = 0.3;
 export const starSpeedFast: number = 5.0;

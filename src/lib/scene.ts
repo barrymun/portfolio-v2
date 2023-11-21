@@ -12,6 +12,7 @@ import {
   straightAndLevelPosition,
   turnOffset,
   turnBankAngle,
+  turnFullRotation,
 } from "utils/constants";
 import { getCheckpoint } from "utils/helpers";
 import { appState } from "utils/state";
@@ -65,12 +66,12 @@ const turnCraft = async (resetOldRotations: boolean) => {
   appState.config.val.craft.rotation.z = 0;
 
   let counter: number = 0;
-  while (counter < 3) {
+  while (counter < turnFullRotation) {
     counter += turnOffset;
     // turn
     appState.config.val.craft.rotation.y -= orientationSign * turnOffset;
     // handle angle of bank
-    const currentBankAngle = (counter > 1.5 ? 3 - counter : counter) * 25;
+    const currentBankAngle = (counter > turnFullRotation / 2 ? turnFullRotation - counter : counter) * 25;
     const finalBankAngle = Math.min(currentBankAngle, turnBankAngle);
     appState.config.val.craft.rotation.z = ((orientationSign * Math.PI) / 180) * finalBankAngle;
     // slight delay for smoother animation

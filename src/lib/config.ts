@@ -48,7 +48,6 @@ gltfLoader.load(dockGLB, (gltf: GLTF) => {
   object.rotation.x = 0;
   object.rotation.y = (-Math.PI / 180) * 90;
   // default position
-  // object.position.x = 1;
   object.position.x = 0;
   object.position.z = -5;
 

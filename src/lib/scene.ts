@@ -169,12 +169,15 @@ const performManoeuvre = async () => {
   // this gives the illusion that the craft is accelerating away from the dock
   let inverseDockPosition: number = 0;
   let dockOffset: number = 0;
-  while (dockOffset < (window.innerWidth / 3) * 2) {
+  while (dockOffset < Math.max(window.innerWidth, window.innerHeight, 1200)) {
     dockOffset += positionOffset;
     appState.config.val.dock.position.x -= orientationSign * (dockOffset / 10000);
     await new Promise((resolve) => setTimeout(resolve, 1));
   }
   inverseDockPosition = appState.config.val.dock.position.x * -1;
+
+  // hide the dock for smaller screens (should be off page at this point)
+  appState.config.val.dock.visible = false;
 
   let position: number = 0;
   while (position < checkpoint) {
@@ -192,6 +195,9 @@ const performManoeuvre = async () => {
     position += positionOffset;
     await new Promise((resolve) => setTimeout(resolve, 1));
   }
+
+  // show the dock again
+  appState.config.val.dock.visible = true;
 
   // move the dock back to its original position
   // this gives the illusion that the craft is decelerating towards the dock

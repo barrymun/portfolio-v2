@@ -141,6 +141,52 @@ const performBackflip = (position: number) => {
   appState.config.val.craft.rotation.y -= (positionOffset / 1000) * 2;
 };
 
+/**
+ * move the dock in the opposite direction to the craft
+ * this gives the illusion that the craft is accelerating away from the dock
+ */
+const pullAwayFromDock = async (): Promise<number> => {
+  if (!appState.config.val) {
+    return 0;
+  }
+
+  let dockOffset: number = 0;
+  while (dockOffset < Math.max(window.innerWidth, window.innerHeight, 1200)) {
+    dockOffset += positionOffset;
+    appState.config.val.dock.position.x -= orientationSign * (dockOffset / 10000);
+    await new Promise((resolve) => setTimeout(resolve, 1));
+  }
+  return dockOffset;
+};
+
+/**
+ * move the dock back to its original position
+ * this gives the illusion that the craft is decelerating towards the dock
+ * @param dockOffset
+ * @returns
+ */
+const pullIntoDock = async ({
+  dockOffset,
+  initialDockPosition,
+}: {
+  dockOffset: number;
+  initialDockPosition: number;
+}) => {
+  if (!appState.config.val) {
+    return;
+  }
+
+  const inverseDockPosition = appState.config.val.dock.position.x * -1;
+  appState.config.val.dock.position.x = inverseDockPosition;
+  let velocity = orientationSign * (dockOffset / 10000);
+  while (appState.craftDirection.val === "right" ? velocity > initialDockPosition : velocity < initialDockPosition) {
+    dockOffset -= positionOffset;
+    velocity = orientationSign * (dockOffset / 10000);
+    appState.config.val.dock.position.x -= velocity;
+    await new Promise((resolve) => setTimeout(resolve, 1));
+  }
+};
+
 const performManoeuvre = async () => {
   if (!appState.config.val) {
     return;
@@ -165,17 +211,8 @@ const performManoeuvre = async () => {
   appState.config.val.craft.rotation.y = ((orientationSign * Math.PI) / 180) * 90;
   appState.config.val.craft.rotation.z = (Math.PI / 180) * 90;
 
-  // move the dock in the opposite direction to the craft
-  // this gives the illusion that the craft is accelerating away from the dock
-  let inverseDockPosition: number = 0;
-  let dockOffset: number = 0;
-  while (dockOffset < Math.max(window.innerWidth, window.innerHeight, 1200)) {
-    dockOffset += positionOffset;
-    appState.config.val.dock.position.x -= orientationSign * (dockOffset / 10000);
-    await new Promise((resolve) => setTimeout(resolve, 1));
-  }
-  inverseDockPosition = appState.config.val.dock.position.x * -1;
-
+  // pull the craft away from the dock
+  const dockOffset = await pullAwayFromDock();
   // hide the dock for smaller screens (should be off page at this point)
   appState.config.val.dock.visible = false;
 
@@ -198,17 +235,9 @@ const performManoeuvre = async () => {
 
   // show the dock again
   appState.config.val.dock.visible = true;
+  // pull the craft back into the dock
+  await pullIntoDock({ dockOffset, initialDockPosition });
 
-  // move the dock back to its original position
-  // this gives the illusion that the craft is decelerating towards the dock
-  appState.config.val.dock.position.x = inverseDockPosition;
-  let velocity = orientationSign * (dockOffset / 10000);
-  while (appState.craftDirection.val === "right" ? velocity > initialDockPosition : velocity < initialDockPosition) {
-    dockOffset -= positionOffset;
-    velocity = orientationSign * (dockOffset / 10000);
-    appState.config.val.dock.position.x -= velocity;
-    await new Promise((resolve) => setTimeout(resolve, 1));
-  }
   // ensure the dock is in the correct position
   appState.config.val.dock.position.x = initialDockPosition;
 

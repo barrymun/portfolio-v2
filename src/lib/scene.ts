@@ -110,6 +110,7 @@ const moveCraftUpAndDown = (position: number) => {
   // Update craft rotation to pitch upwards or downwards
   appState.config.val.craft.rotation.y = orientationSign * straightAndLevelPosition - pitchAngle;
   appState.config.val.craft.rotation.x = ((orientationSign * -Math.PI) / 180) * 90;
+  appState.config.val.craft.rotation.z = (Math.PI / 180) * 90;
 };
 
 const moveCraftLeftAndRight = (position: number) => {
@@ -154,12 +155,26 @@ const performManoeuvre = async () => {
 
   const manoeuvre = appState.progressions.val[appState.currentProgressionIndex.val].manoeuvre;
   const checkpoint = getCheckpoint(manoeuvre);
+  const initialDockPosition = appState.config.val.dock.position.x;
 
   // start performing the manoeuvre
   appState.isPerformingManoeuvre.val = true;
 
-  // ensure correct direction for the first frame
+  // ensure correct rotation for the first frame
+  appState.config.val.craft.rotation.x = ((orientationSign * -Math.PI) / 180) * 90;
   appState.config.val.craft.rotation.y = ((orientationSign * Math.PI) / 180) * 90;
+  appState.config.val.craft.rotation.z = (Math.PI / 180) * 90;
+
+  // move the dock in the opposite direction to the craft
+  // this gives the illusion that the craft is accelerating away from the dock
+  let inverseDockPosition: number = 0;
+  let dockOffset: number = 0;
+  while (dockOffset < (window.innerWidth / 3) * 2) {
+    dockOffset += positionOffset;
+    appState.config.val.dock.position.x -= orientationSign * (dockOffset / 10000);
+    await new Promise((resolve) => setTimeout(resolve, 1));
+  }
+  inverseDockPosition = appState.config.val.dock.position.x * -1;
 
   let position: number = 0;
   while (position < checkpoint) {
@@ -177,6 +192,19 @@ const performManoeuvre = async () => {
     position += positionOffset;
     await new Promise((resolve) => setTimeout(resolve, 1));
   }
+
+  // move the dock back to its original position
+  // this gives the illusion that the craft is decelerating towards the dock
+  appState.config.val.dock.position.x = inverseDockPosition;
+  let velocity = orientationSign * (dockOffset / 10000);
+  while (appState.craftDirection.val === "right" ? velocity > initialDockPosition : velocity < initialDockPosition) {
+    dockOffset -= positionOffset;
+    velocity = orientationSign * (dockOffset / 10000);
+    appState.config.val.dock.position.x -= velocity;
+    await new Promise((resolve) => setTimeout(resolve, 1));
+  }
+  // ensure the dock is in the correct position
+  appState.config.val.dock.position.x = initialDockPosition;
 
   // end performing the manoeuvre
   appState.isPerformingManoeuvre.val = false;

@@ -6,6 +6,7 @@ import { appState } from "utils/state";
 import { PlaneManoeuvre } from "utils/types";
 
 import jetGLB from "assets/img/jet.glb";
+import dockGLB from "assets/img/dock.glb";
 
 let scene: THREE.Scene | undefined;
 let ambientLight: THREE.AmbientLight | undefined;
@@ -13,8 +14,10 @@ let camera: THREE.PerspectiveCamera | undefined;
 let pointLight: THREE.PointLight | undefined;
 let renderer: THREE.WebGLRenderer | undefined;
 let plane: THREE.Group | undefined;
-let isLoaded: boolean = false;
+let dock: THREE.Group | undefined;
 
+// load
+// TODO: might need to consider object.renderOrder when loading
 const gltfLoader: GLTFLoader = new GLTFLoader();
 gltfLoader.load(jetGLB, (gltf: GLTF) => {
   const object = gltf.scene;
@@ -27,10 +30,29 @@ gltfLoader.load(jetGLB, (gltf: GLTF) => {
   object.rotation.x = (-Math.PI / 180) * 90;
   object.rotation.y = (Math.PI / 180) * 90;
   object.rotation.z = (Math.PI / 180) * 90;
+  // default position
+  object.position.z = 1;
 
   plane = object;
   scene?.add(plane);
-  isLoaded = true;
+});
+
+gltfLoader.load(dockGLB, (gltf: GLTF) => {
+  const object = gltf.scene;
+  object.traverse((c) => {
+    c.castShadow = true;
+  });
+
+  object.scale.setScalar(1.0);
+  // defaults for facing right
+  object.rotation.x = 0;
+  object.rotation.y = (-Math.PI / 180) * 90;
+  // default position
+  object.position.x = 1;
+  object.position.z = -5;
+
+  dock = object;
+  scene?.add(dock);
 });
 
 const setupRenderer = () => {
@@ -54,6 +76,7 @@ const setupRenderer = () => {
   // scene.add(pointLight);
 
   camera.updateProjectionMatrix();
+  camera.position.z = 5;
 
   renderer = new THREE.WebGLRenderer({
     alpha: true,
@@ -82,21 +105,19 @@ export const initConfig = async () => {
   setupRenderer();
   setupProgression();
 
-  while (!isLoaded) {
+  while (!plane || !dock) {
     await new Promise((resolve) => setTimeout(resolve, 100));
   }
 
-  if (!scene || !camera || !renderer || !plane) {
+  if (!scene || !camera || !renderer || !plane || !dock) {
     throw new Error("Something went wrong in the config");
   }
-
-  camera.position.z = 5;
-  plane.position.z = 0;
 
   appState.config.val = {
     scene,
     camera,
     renderer,
     plane,
+    dock,
   };
 };

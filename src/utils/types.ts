@@ -8,6 +8,7 @@ export interface Config {
   camera: THREE.PerspectiveCamera;
   renderer: THREE.WebGLRenderer;
   plane: THREE.Group;
+  dock: THREE.Group;
 }
 
 export type PlaneDirection = "right" | "left";

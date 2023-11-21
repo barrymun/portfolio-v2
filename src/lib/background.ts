@@ -21,6 +21,7 @@ van.derive(() => {
 });
 
 const drawStars = () => {
+  // draw smaller stars on mobile
   const starRadius = window.innerWidth <= 768 ? 1.0 : 2.0;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = "white";

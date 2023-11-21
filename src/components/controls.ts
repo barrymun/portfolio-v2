@@ -1,6 +1,6 @@
 import van from "vanjs-core";
 
-import { performManoeuvre, turnPlane } from "lib/plane";
+import { performManoeuvre, turnPlane } from "lib/craft";
 import { appState } from "utils/state";
 
 // import ArrowNarrowLeftSrc from "@tabler/icons/arrow-narrow-left.svg";
@@ -19,10 +19,10 @@ export const Controls = () => {
       appState.currentProgressionIndex.val -= 1;
       await performManoeuvre();
     }
-    // if the user is at the beginning of the progression, turn the plane around
+    // if the user is at the beginning of the progression, turn the craft around
     if (appState.currentProgressionIndex.val === 0) {
       await turnPlane(false);
-      // set this after the turn so that the plane faces the correct way
+      // set this after the turn so that the craft faces the correct way
       appState.planeDirection.val = "right";
     }
   };
@@ -37,10 +37,10 @@ export const Controls = () => {
       await performManoeuvre();
       appState.currentProgressionIndex.val += 1;
     }
-    // if the user is at the end of the progression, turn the plane around
+    // if the user is at the end of the progression, turn the craft around
     if (appState.currentProgressionIndex.val === appState.progressions.val.length) {
       await turnPlane(false);
-      // set this after the turn so that the plane faces the correct way
+      // set this after the turn so that the craft faces the correct way
       appState.planeDirection.val = "left";
     }
   };

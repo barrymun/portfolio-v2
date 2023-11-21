@@ -7,7 +7,7 @@ export interface Config {
   scene: THREE.Scene;
   camera: THREE.PerspectiveCamera;
   renderer: THREE.WebGLRenderer;
-  plane: THREE.Group;
+  craft: THREE.Group;
   dock: THREE.Group;
 }
 

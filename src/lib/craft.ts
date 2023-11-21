@@ -16,7 +16,7 @@ import {
 import { getCheckpoint } from "utils/helpers";
 import { appState } from "utils/state";
 
-// determine the sign to apply to various properties based on the plane's orientation
+// determine the sign to apply to various properties based on the craft's orientation
 let orientationSign: number = appState.planeDirection.val === "right" ? 1 : -1;
 van.derive(() => {
   orientationSign = appState.planeDirection.val === "right" ? 1 : -1;
@@ -35,18 +35,18 @@ const performHover = (position: number) => {
   const rollAngle: number = hoverAmplitude * Math.sin(hoverFrequency * position);
   const rotationAngle: number = straightAndLevelPosition - rollAngle;
   // bank left and right slightly
-  appState.config.val.plane.rotation.z = rotationAngle;
+  appState.config.val.craft.rotation.z = rotationAngle;
   // pitch up and down slightly
-  appState.config.val.plane.rotation.y = rotationAngle;
+  appState.config.val.craft.rotation.y = rotationAngle;
   // move in and out of the screen slightly
-  appState.config.val.plane.position.z -= rollAngle / 20;
-  // move plane up and down slightly
-  appState.config.val.plane.position.y -= rollAngle / 30;
-  // move plane left and right slightly
-  appState.config.val.plane.position.x -= rollAngle / 50;
+  appState.config.val.craft.position.z -= rollAngle / 20;
+  // move craft up and down slightly
+  appState.config.val.craft.position.y -= rollAngle / 30;
+  // move craft left and right slightly
+  appState.config.val.craft.position.x -= rollAngle / 50;
 
-  appState.config.val.plane.rotation.x = ((orientationSign * -Math.PI) / 180) * 90;
-  appState.config.val.plane.rotation.y = ((orientationSign * Math.PI) / 180) * 90;
+  appState.config.val.craft.rotation.x = ((orientationSign * -Math.PI) / 180) * 90;
+  appState.config.val.craft.rotation.y = ((orientationSign * Math.PI) / 180) * 90;
 };
 
 const turnPlane = async (resetOldRotations: boolean) => {
@@ -57,30 +57,30 @@ const turnPlane = async (resetOldRotations: boolean) => {
   // start performing the manoeuvre
   appState.isPerformingManoeuvre.val = true;
 
-  // save the old plane rotation on y and z axis
-  const planeRotationY = appState.config.val.plane.rotation.y;
-  const planeRotationZ = appState.config.val.plane.rotation.z;
-  // set plane rotation on y and z axis to 0
-  appState.config.val.plane.rotation.x = 0;
-  appState.config.val.plane.rotation.z = 0;
+  // save the old craft rotation on y and z axis
+  const planeRotationY = appState.config.val.craft.rotation.y;
+  const planeRotationZ = appState.config.val.craft.rotation.z;
+  // set craft rotation on y and z axis to 0
+  appState.config.val.craft.rotation.x = 0;
+  appState.config.val.craft.rotation.z = 0;
 
   let counter: number = 0;
   while (counter < 3) {
     counter += turnOffset;
     // turn
-    appState.config.val.plane.rotation.y -= orientationSign * turnOffset;
+    appState.config.val.craft.rotation.y -= orientationSign * turnOffset;
     // handle angle of bank
     const currentBankAngle = (counter > 1.5 ? 3 - counter : counter) * 25;
     const finalBankAngle = Math.min(currentBankAngle, turnBankAngle);
-    appState.config.val.plane.rotation.z = ((orientationSign * Math.PI) / 180) * finalBankAngle;
+    appState.config.val.craft.rotation.z = ((orientationSign * Math.PI) / 180) * finalBankAngle;
     // slight delay for smoother animation
     await new Promise((resolve) => setTimeout(resolve, 1));
   }
 
-  // reset plane rotation on y and z axis
+  // reset craft rotation on y and z axis
   if (resetOldRotations) {
-    appState.config.val.plane.rotation.y = planeRotationY;
-    appState.config.val.plane.rotation.z = planeRotationZ;
+    appState.config.val.craft.rotation.y = planeRotationY;
+    appState.config.val.craft.rotation.z = planeRotationZ;
   }
 
   // end performing the manoeuvre
@@ -95,9 +95,9 @@ const movePlaneUpAndDown = (position: number) => {
   // Sinusoidal position calculation for y-axis
   const sinusoidalY = pitchAmplitude * Math.sin(pitchFrequency * position);
 
-  // Update plane position
-  appState.config.val.plane.position.y = sinusoidalY;
-  appState.config.val.plane.position.x = -(sinusoidalY / 4);
+  // Update craft position
+  appState.config.val.craft.position.y = sinusoidalY;
+  appState.config.val.craft.position.x = -(sinusoidalY / 4);
 
   // Calculate the desired pitch angle based on the slope of the sine wave
   const slope = Math.sin(pitchFrequency * position);
@@ -107,9 +107,9 @@ const movePlaneUpAndDown = (position: number) => {
   // Ensure the pitchAngle transitions smoothly
   pitchAngle *= Math.PI / 360; // Convert degrees to radians for smoother transition
 
-  // Update plane rotation to pitch upwards or downwards
-  appState.config.val.plane.rotation.y = orientationSign * straightAndLevelPosition - pitchAngle;
-  appState.config.val.plane.rotation.x = ((orientationSign * -Math.PI) / 180) * 90;
+  // Update craft rotation to pitch upwards or downwards
+  appState.config.val.craft.rotation.y = orientationSign * straightAndLevelPosition - pitchAngle;
+  appState.config.val.craft.rotation.x = ((orientationSign * -Math.PI) / 180) * 90;
 };
 
 const movePlaneLeftAndRight = (position: number) => {
@@ -118,12 +118,12 @@ const movePlaneLeftAndRight = (position: number) => {
   }
 
   const sinusoidalY = pitchAmplitude * Math.sin(pitchFrequency * position);
-  appState.config.val.plane.position.x = -(sinusoidalY / 10);
+  appState.config.val.craft.position.x = -(sinusoidalY / 10);
   const rollAngle = rollAmplitude * Math.sin(rollFrequency * position);
-  appState.config.val.plane.rotation.z = straightAndLevelPosition - rollAngle;
+  appState.config.val.craft.rotation.z = straightAndLevelPosition - rollAngle;
 
-  appState.config.val.plane.rotation.x = ((orientationSign * -Math.PI) / 180) * 90;
-  appState.config.val.plane.rotation.y = ((orientationSign * Math.PI) / 180) * 90;
+  appState.config.val.craft.rotation.x = ((orientationSign * -Math.PI) / 180) * 90;
+  appState.config.val.craft.rotation.y = ((orientationSign * Math.PI) / 180) * 90;
 };
 
 const performBackflip = (position: number) => {
@@ -132,12 +132,12 @@ const performBackflip = (position: number) => {
   }
 
   const sinusoidalY = pitchAmplitude * Math.sin(pitchFrequency * position);
-  appState.config.val.plane.position.y = sinusoidalY;
+  appState.config.val.craft.position.y = sinusoidalY;
 
-  appState.config.val.plane.position.x = -((orientationSign * sinusoidalY) / 4);
-  appState.config.val.plane.rotation.x = ((orientationSign * -Math.PI) / 180) * 90;
+  appState.config.val.craft.position.x = -((orientationSign * sinusoidalY) / 4);
+  appState.config.val.craft.rotation.x = ((orientationSign * -Math.PI) / 180) * 90;
 
-  appState.config.val.plane.rotation.y -= (positionOffset / 1000) * 2;
+  appState.config.val.craft.rotation.y -= (positionOffset / 1000) * 2;
 };
 
 const performManoeuvre = async () => {
@@ -159,7 +159,7 @@ const performManoeuvre = async () => {
   appState.isPerformingManoeuvre.val = true;
 
   // ensure correct direction for the first frame
-  appState.config.val.plane.rotation.y = ((orientationSign * Math.PI) / 180) * 90;
+  appState.config.val.craft.rotation.y = ((orientationSign * Math.PI) / 180) * 90;
 
   let position: number = 0;
   while (position < checkpoint) {

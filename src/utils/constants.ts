@@ -9,7 +9,7 @@ export const pitchFrequency: number = 0.002; // This controls the width of the l
 export const pitchIntensity: number = 20; // Adjust this factor to control the pitch intensity
 // constants for the rocking motion
 export const rollAmplitude: number = (Math.PI / 180) * 30; // 30 degrees in radians
-export const rollFrequency: number = 0.0025; // Adjust this for how quickly you want the plane to rock
+export const rollFrequency: number = 0.0025; // Adjust this for how quickly you want the craft to rock
 // constants for the backflip motion
 export const flipFrequency: number = pitchFrequency;
 // constants for the hover motion

@@ -13,7 +13,7 @@ let ambientLight: THREE.AmbientLight | undefined;
 let camera: THREE.PerspectiveCamera | undefined;
 let pointLight: THREE.PointLight | undefined;
 let renderer: THREE.WebGLRenderer | undefined;
-let plane: THREE.Group | undefined;
+let craft: THREE.Group | undefined;
 let dock: THREE.Group | undefined;
 
 // load
@@ -33,8 +33,8 @@ gltfLoader.load(jetGLB, (gltf: GLTF) => {
   // default position
   object.position.z = 1;
 
-  plane = object;
-  scene?.add(plane);
+  craft = object;
+  scene?.add(craft);
 });
 
 gltfLoader.load(dockGLB, (gltf: GLTF) => {
@@ -105,11 +105,11 @@ export const initConfig = async () => {
   setupRenderer();
   setupProgression();
 
-  while (!plane || !dock) {
+  while (!craft || !dock) {
     await new Promise((resolve) => setTimeout(resolve, 100));
   }
 
-  if (!scene || !camera || !renderer || !plane || !dock) {
+  if (!scene || !camera || !renderer || !craft || !dock) {
     throw new Error("Something went wrong in the config");
   }
 
@@ -117,7 +117,7 @@ export const initConfig = async () => {
     scene,
     camera,
     renderer,
-    plane,
+    craft,
     dock,
   };
 };

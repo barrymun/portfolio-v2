@@ -4,8 +4,9 @@
 - [ ] Alter the craft and dock sprites
 - [ ] Add the details of at least 3 projects
 - [ ] Create a details card CSS element for these projects
-- [ ] Dock should move around the scene a little
 - [ ] Add a planet/moon that rotates somewhere
+- [ ] Make the previous/next buttons smaller on mobile
+- [ ] Fix the icons for the previous/next buttons
 
 ## In Progress
 
@@ -18,6 +19,7 @@
   - [x] Perform turns
   - [x] Perform manoeuvres
 - [x] Dock
+  - [x] Should move around the scene a little
 - [x] Background
   - [x] Add stars that follow the mouse
   - [x] Stars move faster when the craft is performing a manoeuvre and slow down when the manoeuvre is coming to an end

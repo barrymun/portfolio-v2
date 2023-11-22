@@ -2,6 +2,11 @@ export const repoUrl: string = "https://github.com/barrymun/portfolio-v2";
 
 export const positionOffset: number = 6;
 
+// constants for the dock
+export const dockPositionOffet: number = 0.02;
+export const initialDockXPosition: number = 0;
+export const initialDockZPosition: number = -5;
+
 export const straightAndLevelPosition: number = Math.PI / 2;
 // constants for the sinusoidal movement and pitch intensity
 export const pitchAmplitude: number = 3; // This controls the height of the loops

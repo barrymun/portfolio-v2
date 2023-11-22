@@ -6,8 +6,8 @@ import { Controls } from "components/controls";
 import { Scene } from "components/scene";
 import { handleResizeBackground, initBackground, renderBackground } from "lib/background";
 import { initConfig } from "lib/config";
-import { handleResizeCraft, performHover, renderCraft } from "lib/scene";
-import { positionOffset } from "utils/constants";
+import { handleResizeScene, performHover, renderCraft, simulateDockMovement } from "lib/scene";
+import { dockPositionOffet, positionOffset } from "utils/constants";
 import { appState } from "utils/state";
 
 import "assets/css/base.css";
@@ -24,6 +24,8 @@ van.add(dom, Scene());
 van.add(dom, Controls());
 
 let hoverPosition: number = 0;
+let dockPosition: number = 0;
+
 van.derive(() => {
   // reset the hover position when manoeuvre is complete
   if (!appState.isPerformingManoeuvre.val) {
@@ -38,7 +40,12 @@ const animate = () => {
   renderCraft();
 
   performHover(hoverPosition);
-  hoverPosition += positionOffset;
+  simulateDockMovement(dockPosition);
+
+  if (!appState.isPerformingManoeuvre.val) {
+    hoverPosition += positionOffset;
+    dockPosition += dockPositionOffet;
+  }
 };
 
 const handleLoad = async () => {
@@ -49,7 +56,7 @@ const handleLoad = async () => {
 
 const handleResize = () => {
   handleResizeBackground();
-  handleResizeCraft();
+  handleResizeScene();
 };
 
 const handleUnload = () => {

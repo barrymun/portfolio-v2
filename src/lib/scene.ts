@@ -12,6 +12,7 @@ import {
   turnOffset,
   turnBankAngle,
   turnFullRotation,
+  initialDockXPosition,
 } from "utils/constants";
 import { calcPitch, getCheckpoint } from "utils/helpers";
 import { appState } from "utils/state";
@@ -23,12 +24,10 @@ van.derive(() => {
 });
 
 const performHover = (position: number) => {
-  // return;
   if (!appState.config.val) {
     return;
   }
 
-  // don't perform the hover manoeuvre if the user is scrolling
   if (appState.isPerformingManoeuvre.val) {
     return;
   }
@@ -50,6 +49,22 @@ const performHover = (position: number) => {
 
   appState.config.val.craft.rotation.x = ((orientationSign * -Math.PI) / 180) * 90;
   appState.config.val.craft.rotation.y = ((orientationSign * Math.PI) / 180) * 90;
+};
+
+const simulateDockMovement = (position: number) => {
+  if (!appState.config.val) {
+    return;
+  }
+
+  if (appState.isPerformingManoeuvre.val) {
+    return;
+  }
+
+  const horizontalOffset = Math.cos(-position) * 0.1;
+  const verticalOffset = Math.sin(-position) * 0.1;
+
+  appState.config.val.dock.position.x = horizontalOffset;
+  appState.config.val.dock.position.y = verticalOffset;
 };
 
 const turnCraft = async (resetOldRotations: boolean) => {
@@ -173,13 +188,7 @@ const pullAwayFromDock = async (): Promise<number> => {
  * @param dockOffset
  * @returns
  */
-const pullIntoDock = async ({
-  dockOffset,
-  initialDockPosition,
-}: {
-  dockOffset: number;
-  initialDockPosition: number;
-}) => {
+const pullIntoDock = async (dockOffset: number) => {
   if (!appState.config.val) {
     return;
   }
@@ -187,7 +196,7 @@ const pullIntoDock = async ({
   const inverseDockPosition = appState.config.val.dock.position.x * -1;
   appState.config.val.dock.position.x = inverseDockPosition;
   let velocity = orientationSign * (dockOffset / 10000);
-  while (appState.craftDirection.val === "right" ? velocity > initialDockPosition : velocity < initialDockPosition) {
+  while (appState.craftDirection.val === "right" ? velocity > initialDockXPosition : velocity < initialDockXPosition) {
     dockOffset -= positionOffset;
     velocity = orientationSign * (dockOffset / 10000);
     appState.config.val.dock.position.x -= velocity;
@@ -209,7 +218,6 @@ const performManoeuvre = async () => {
 
   const manoeuvre = appState.progressions.val[appState.currentProgressionIndex.val].manoeuvre;
   const checkpoint = getCheckpoint(manoeuvre);
-  const initialDockPosition = appState.config.val.dock.position.x;
 
   // start performing the manoeuvre
   appState.isPerformingManoeuvre.val = true;
@@ -244,10 +252,7 @@ const performManoeuvre = async () => {
   // show the dock again
   appState.config.val.dock.visible = true;
   // pull the craft back into the dock
-  await pullIntoDock({ dockOffset, initialDockPosition });
-
-  // ensure the dock is in the correct position
-  appState.config.val.dock.position.x = initialDockPosition;
+  await pullIntoDock(dockOffset);
 
   // end performing the manoeuvre
   appState.isPerformingManoeuvre.val = false;
@@ -261,7 +266,7 @@ const renderCraft = () => {
   appState.config.val.renderer.render(appState.config.val.scene, appState.config.val.camera);
 };
 
-const handleResizeCraft = () => {
+const handleResizeScene = () => {
   if (!appState.config.val) {
     return;
   }
@@ -273,11 +278,12 @@ const handleResizeCraft = () => {
 
 export {
   performHover,
+  simulateDockMovement,
   turnCraft,
   moveCraftUpAndDown,
   moveCraftLeftAndRight,
   performBackflip,
   performManoeuvre,
   renderCraft,
-  handleResizeCraft,
+  handleResizeScene,
 };

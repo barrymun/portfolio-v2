@@ -7,6 +7,7 @@ import { CraftManoeuvre } from "utils/types";
 
 import craftGLB from "assets/glb/craft.glb";
 import dockGLB from "assets/glb/dock.glb";
+import { initialDockXPosition, initialDockZPosition } from "utils/constants";
 
 let scene: THREE.Scene | undefined;
 let ambientLight: THREE.AmbientLight | undefined;
@@ -48,8 +49,8 @@ gltfLoader.load(dockGLB, (gltf: GLTF) => {
   object.rotation.x = (Math.PI / 180) * 90;
   object.rotation.z = 1;
   // default position
-  object.position.x = 0;
-  object.position.z = -5;
+  object.position.x = initialDockXPosition;
+  object.position.z = initialDockZPosition;
 
   dock = object;
   scene?.add(dock);

@@ -76,6 +76,10 @@ const turnCraft = async (resetOldRotations: boolean) => {
     const currentBankAngle = (counter > turnFullRotation / 2 ? turnFullRotation - counter : counter) * 25;
     const finalBankAngle = Math.min(currentBankAngle, turnBankAngle);
     appState.config.val.craft.rotation.z = ((orientationSign * Math.PI) / 180) * finalBankAngle;
+    // handle position
+    const currentXPos = (counter > turnFullRotation / 2 ? turnFullRotation - counter : counter) * 2;
+    // const finalXPos = Math.min(currentXPos, turnBankAngle);
+    appState.config.val.craft.position.x = orientationSign * currentXPos;
     // slight delay for smoother animation
     await new Promise((resolve) => setTimeout(resolve, 1));
   }

@@ -19,6 +19,7 @@ import { appState } from "utils/state";
 
 // determine the sign to apply to various properties based on the craft's orientation
 let orientationSign: number = appState.craftDirection.val === "right" ? 1 : -1;
+
 van.derive(() => {
   orientationSign = appState.craftDirection.val === "right" ? 1 : -1;
 });

@@ -7,8 +7,12 @@
   justify-content: center;
   align-items: center;
   gap: 16px;
-
-  /* pointer-events: none; */
+}
+@media screen and (max-width: 768px) {
+  .controls {
+    bottom: 24px;
+    left: calc(50% - 40px - 8px);
+  }
 }
 
 .controls button {
@@ -20,4 +24,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+@media screen and (max-width: 768px) {
+  .controls button {
+    width: 40px;
+    height: 40px;
+  }
 }

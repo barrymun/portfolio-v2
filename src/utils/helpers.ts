@@ -1,4 +1,4 @@
-import { flipFrequency, pitchFrequency, rollFrequency } from "utils/constants";
+import { flipFrequency, pitchAmplitude, pitchFrequency, rollFrequency } from "utils/constants";
 import { CraftManoeuvre } from "utils/types";
 
 export const getPeriod = (frequency: number): number => {
@@ -20,3 +20,10 @@ export const getCheckpoint = (type: CraftManoeuvre) => {
   }
   return res;
 };
+
+/**
+ * sinusoidal position calculation for y-axis
+ * @param position
+ * @returns
+ */
+export const calcPitch = (position: number): number => pitchAmplitude * Math.sin(pitchFrequency * position);

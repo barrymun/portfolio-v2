@@ -3,7 +3,6 @@ import van from "vanjs-core";
 import {
   hoverAmplitude,
   hoverFrequency,
-  pitchAmplitude,
   pitchFrequency,
   pitchIntensity,
   rollAmplitude,
@@ -14,7 +13,7 @@ import {
   turnBankAngle,
   turnFullRotation,
 } from "utils/constants";
-import { getCheckpoint } from "utils/helpers";
+import { calcPitch, getCheckpoint } from "utils/helpers";
 import { appState } from "utils/state";
 
 // determine the sign to apply to various properties based on the craft's orientation
@@ -33,18 +32,20 @@ const performHover = (position: number) => {
     return;
   }
 
-  const rollAngle: number = hoverAmplitude * Math.sin(hoverFrequency * position);
-  const rotationAngle: number = straightAndLevelPosition - rollAngle;
-  // bank left and right slightly
-  appState.config.val.craft.rotation.z = rotationAngle;
+  const rollAngle = hoverAmplitude * Math.sin(hoverFrequency * position);
+  const rotationAngle = straightAndLevelPosition - rollAngle;
+
   // pitch up and down slightly
   appState.config.val.craft.rotation.y = rotationAngle;
+  // bank left and right slightly
+  appState.config.val.craft.rotation.z = rotationAngle;
+
+  // move craft left and right slightly
+  appState.config.val.craft.position.x -= rollAngle / 50;
   // move in and out of the screen slightly
   appState.config.val.craft.position.z -= rollAngle / 20;
   // move craft up and down slightly
   appState.config.val.craft.position.y -= rollAngle / 30;
-  // move craft left and right slightly
-  appState.config.val.craft.position.x -= rollAngle / 50;
 
   appState.config.val.craft.rotation.x = ((orientationSign * -Math.PI) / 180) * 90;
   appState.config.val.craft.rotation.y = ((orientationSign * Math.PI) / 180) * 90;
@@ -61,6 +62,7 @@ const turnCraft = async (resetOldRotations: boolean) => {
   // save the old craft rotation on y and z axis
   const craftRotationY = appState.config.val.craft.rotation.y;
   const craftRotationZ = appState.config.val.craft.rotation.z;
+
   // set craft rotation on y and z axis to 0
   appState.config.val.craft.rotation.x = 0;
   appState.config.val.craft.rotation.z = 0;
@@ -93,24 +95,23 @@ const moveCraftUpAndDown = (position: number) => {
     return;
   }
 
-  // Sinusoidal position calculation for y-axis
-  const sinusoidalY = pitchAmplitude * Math.sin(pitchFrequency * position);
+  const pitch = calcPitch(position);
 
-  // Update craft position
-  appState.config.val.craft.position.y = sinusoidalY;
-  appState.config.val.craft.position.x = -(sinusoidalY / 4);
+  // update craft position
+  appState.config.val.craft.position.x = -(pitch / 4);
+  appState.config.val.craft.position.y = pitch;
 
-  // Calculate the desired pitch angle based on the slope of the sine wave
+  // calculate the desired pitch angle based on the slope of the sine wave
   const slope = Math.sin(pitchFrequency * position);
-  // Adjust pitch based on the slope and intensity factor
+  // adjust pitch based on the slope and intensity factor
   let pitchAngle = slope * pitchIntensity;
 
-  // Ensure the pitchAngle transitions smoothly
+  // ensure the pitchAngle transitions smoothly
   pitchAngle *= Math.PI / 360; // Convert degrees to radians for smoother transition
 
-  // Update craft rotation to pitch upwards or downwards
-  appState.config.val.craft.rotation.y = orientationSign * straightAndLevelPosition - pitchAngle;
+  // update craft rotation to pitch upwards or downwards
   appState.config.val.craft.rotation.x = ((orientationSign * -Math.PI) / 180) * 90;
+  appState.config.val.craft.rotation.y = orientationSign * straightAndLevelPosition - pitchAngle;
   appState.config.val.craft.rotation.z = (Math.PI / 180) * 90;
 };
 
@@ -119,9 +120,10 @@ const moveCraftLeftAndRight = (position: number) => {
     return;
   }
 
-  const sinusoidalY = pitchAmplitude * Math.sin(pitchFrequency * position);
-  appState.config.val.craft.position.x = -(sinusoidalY / 10);
+  const pitch = calcPitch(position);
   const rollAngle = rollAmplitude * Math.sin(rollFrequency * position);
+
+  appState.config.val.craft.position.x = -(pitch / 10);
   appState.config.val.craft.rotation.z = straightAndLevelPosition - rollAngle;
 
   appState.config.val.craft.rotation.x = ((orientationSign * -Math.PI) / 180) * 90;
@@ -133,12 +135,12 @@ const performBackflip = (position: number) => {
     return;
   }
 
-  const sinusoidalY = pitchAmplitude * Math.sin(pitchFrequency * position);
-  appState.config.val.craft.position.y = sinusoidalY;
+  const pitch = calcPitch(position);
 
-  appState.config.val.craft.position.x = -((orientationSign * sinusoidalY) / 4);
+  appState.config.val.craft.position.x = -((orientationSign * pitch) / 4);
+  appState.config.val.craft.position.y = pitch;
+
   appState.config.val.craft.rotation.x = ((orientationSign * -Math.PI) / 180) * 90;
-
   appState.config.val.craft.rotation.y -= (positionOffset / 1000) * 2;
 };
 

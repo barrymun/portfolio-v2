@@ -13,6 +13,7 @@ import {
   turnBankAngle,
   turnFullRotation,
   initialDockXPosition,
+  projectInfoCardId,
 } from "utils/constants";
 import { calcPitch, getCheckpoint } from "utils/helpers";
 import { appState } from "utils/state";
@@ -66,9 +67,16 @@ const simulateDockMovement = (position: number) => {
 
   appState.config.val.dock.position.x = horizontalOffset;
   appState.config.val.dock.position.y = verticalOffset;
+
+  const el = document.getElementById(projectInfoCardId) as HTMLDivElement;
+  const left = window.innerWidth <= 768 ? horizontalOffset + 65 : horizontalOffset + 57;
+  const top = verticalOffset + 18;
+  el.style.left = `${left}%`;
+  el.style.top = `${top}%`;
+  el.style.transform = `translate(${horizontalOffset * 100}px, ${verticalOffset * 100}px)`;
 };
 
-const turnCraft = async (resetOldRotations: boolean) => {
+const turnCraft = async (manuallyTurned: boolean) => {
   if (!appState.config.val) {
     return;
   }
@@ -102,7 +110,7 @@ const turnCraft = async (resetOldRotations: boolean) => {
   }
 
   // reset craft rotation on y and z axis
-  if (resetOldRotations) {
+  if (manuallyTurned) {
     appState.config.val.craft.rotation.y = craftRotationY;
     appState.config.val.craft.rotation.z = craftRotationZ;
   }

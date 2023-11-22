@@ -1,4 +1,5 @@
 export const repoUrl: string = "https://github.com/barrymun/portfolio-v2";
+export const projectInfoCardId: string = "project-info-card";
 
 export const positionOffset: number = 6;
 

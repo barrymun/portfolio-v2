@@ -5,7 +5,6 @@
 - [ ] Add the details of at least 3 projects
 - [ ] Create a details card CSS element for these projects
 - [ ] Add a planet/moon that rotates somewhere
-- [ ] Make the previous/next buttons smaller on mobile
 - [ ] Fix the icons for the previous/next buttons
 
 ## In Progress
@@ -26,6 +25,7 @@
   - [x] Stars stop following the mouse when the mouse leaves the background canvas
 - [x] Misc
   - [x] Handle resize events for all elements
+  - [x] Make the previous/next buttons smaller on mobile
 
 # Credits
 

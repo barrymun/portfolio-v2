@@ -1,11 +1,13 @@
 import van from "vanjs-core";
 
 import { ForkMe } from "components/fork-me";
+import { ProjectInfoCard } from "components/project-info-card";
 import { Background } from "components/background";
 import { Controls } from "components/controls";
 import { Scene } from "components/scene";
 import { handleResizeBackground, initBackground, renderBackground } from "lib/background";
 import { initConfig } from "lib/config";
+import { showCard } from "lib/project-info-card";
 import { handleResizeScene, performHover, renderCraft, simulateDockMovement } from "lib/scene";
 import { dockPositionOffet, positionOffset } from "utils/constants";
 import { appState } from "utils/state";
@@ -15,10 +17,12 @@ import "assets/css/icons.css";
 import "assets/css/background.css";
 import "assets/css/scene.css";
 import "assets/css/controls.css";
+import "assets/css/project-info-card.css";
 
 const dom = document.body as HTMLBodyElement;
 
 van.add(dom, ForkMe());
+van.add(dom, ProjectInfoCard());
 van.add(dom, Background());
 van.add(dom, Scene());
 van.add(dom, Controls());
@@ -52,6 +56,7 @@ const handleLoad = async () => {
   await initConfig();
   initBackground();
   animate();
+  showCard();
 };
 
 const handleResize = () => {

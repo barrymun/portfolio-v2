@@ -2,7 +2,7 @@ export const repoUrl: string = "https://github.com/barrymun/portfolio-v2";
 
 export const positionOffset: number = 6;
 
-export const straightAndLevelPosition: number = Math.PI / 2; // 90 degrees in radians
+export const straightAndLevelPosition: number = Math.PI / 2;
 // constants for the sinusoidal movement and pitch intensity
 export const pitchAmplitude: number = 3; // This controls the height of the loops
 export const pitchFrequency: number = 0.002; // This controls the width of the loops

@@ -23,6 +23,7 @@ van.derive(() => {
 });
 
 const performHover = (position: number) => {
+  // return;
   if (!appState.config.val) {
     return;
   }

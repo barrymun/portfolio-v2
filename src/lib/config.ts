@@ -5,8 +5,8 @@ import { getCheckpoint } from "utils/helpers";
 import { appState } from "utils/state";
 import { CraftManoeuvre } from "utils/types";
 
-import jetGLB from "assets/img/jet.glb";
-import dockGLB from "assets/img/dock.glb";
+import craftGLB from "assets/glb/craft.glb";
+import dockGLB from "assets/glb/dock.glb";
 
 let scene: THREE.Scene | undefined;
 let ambientLight: THREE.AmbientLight | undefined;
@@ -19,7 +19,7 @@ let dock: THREE.Group | undefined;
 // load
 // TODO: might need to consider object.renderOrder when loading
 const gltfLoader: GLTFLoader = new GLTFLoader();
-gltfLoader.load(jetGLB, (gltf: GLTF) => {
+gltfLoader.load(craftGLB, (gltf: GLTF) => {
   const object = gltf.scene;
   object.traverse((c) => {
     c.castShadow = true;
@@ -43,10 +43,10 @@ gltfLoader.load(dockGLB, (gltf: GLTF) => {
     c.castShadow = true;
   });
 
-  object.scale.setScalar(1.0);
-  // defaults for facing right
-  object.rotation.x = 0;
-  object.rotation.y = (-Math.PI / 180) * 90;
+  object.scale.setScalar(0.12);
+  // default rotation
+  object.rotation.x = (Math.PI / 180) * 90;
+  object.rotation.z = 1;
   // default position
   object.position.x = 0;
   object.position.z = -5;

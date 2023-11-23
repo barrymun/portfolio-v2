@@ -1,5 +1,40 @@
+/* eslint-disable max-len */
+import { Project } from "utils/types";
+
 export const repoUrl: string = "https://github.com/barrymun/portfolio-v2";
 export const projectInfoCardId: string = "project-info-card";
+export const githubProjects: Project[] = [
+  {
+    url: "https://github.com/barrymun/music-visualizer-v2",
+    title: "Music visualizer made with TypeScript and HTML canvas",
+    description:
+      "This application utilizes the VanJS reactive framework in combination with TypeScript and the HTML Canvas API to create a dynamic and engaging music visualizer.",
+  },
+  {
+    url: "https://github.com/barrymun/pdf-merger",
+    title: "Upload and merge PDFs into a single, downloadable PDF",
+    description:
+      "PDF Merger is a simple tool that allows you to upload multiple PDF files, reorder them as needed, and download the result as a single merged PDF file.",
+  },
+  {
+    url: "https://github.com/barrymun/image-to-pdf",
+    title: "Convert JPG, PNG and more to PDF",
+    description:
+      "This tool is designed to simplify the process of converting various image formats, including JPG and PNG, into a unified PDF format.",
+  },
+  {
+    url: "https://github.com/barrymun/image-to-greyscale",
+    title: "A tool that converts images to greyscale.",
+    description:
+      "A handy tool that converts your colorful images to greyscale. Simply upload an image and get a live preview of it. Click the convert button to transform the image into greyscale and view the result immediately. Once satisfied, you can download the greyscale image at the click of a button.",
+  },
+  {
+    url: "https://github.com/barrymun/division-game",
+    title: "Division Game is an interactive game where players are tested on their ability to divide numbers",
+    description:
+      "Division Game is an interactive game where players are tested on their ability to divide numbers. Written in TypeScript and using ViteJS for development and bundling.",
+  },
+];
 
 export const positionOffset: number = 6;
 

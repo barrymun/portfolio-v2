@@ -1,11 +1,11 @@
 #project-info-card {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 18%;
+  left: 57%;
   z-index: 1;
   
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 250px;
   background-color: white;
 
   visibility: visible;
@@ -13,9 +13,15 @@
 
   border: none;
   border-radius: 4px;
+
+  padding: 8px;
+  
+  color: black;
 }
 @media screen and (max-width: 768px) {
   #project-info-card {
+    left: 65%;
+    
     width: 80px;
     height: 80px;
   }
@@ -23,7 +29,24 @@
 
 .fade-in {
   opacity: 0;
-  animation: fadeIn 1s ease-in-out forwards;
+  animation: circularMotion 2s linear infinite, fadeIn 1s ease-in-out forwards;
+}
+@keyframes circularMotion {
+  0% {
+    transform: translateX(0) translateY(-10px);
+  }
+  25% {
+    transform: translateX(10px) translateY(0);
+  }
+  50% {
+    transform: translateX(0) translateY(10px);
+  }
+  75% {
+    transform: translateX(-10px) translateY(0);
+  }
+  100% {
+    transform: translateX(0) translateY(-10px);
+  }
 }
 @keyframes fadeIn {
   from {
@@ -45,4 +68,12 @@
   to {
     opacity: 0;
   }
+}
+
+#project-info-card .title {
+  font-size: 0.8rem;
+}
+
+#project-info-card .description {
+  font-size: 1.2rem;
 }

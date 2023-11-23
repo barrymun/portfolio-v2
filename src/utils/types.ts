@@ -15,9 +15,16 @@ export type CraftDirection = "right" | "left";
 
 export type CraftManoeuvre = "pitch-up-down" | "bank-left-right" | "backflip";
 
+export type Project = {
+  url: string;
+  title: string;
+  description: string;
+};
+
 export type Progression = {
   checkpoint: number;
   manoeuvre: CraftManoeuvre;
+  project: Project;
 };
 
 export type Star = {

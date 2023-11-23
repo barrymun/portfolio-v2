@@ -27,3 +27,17 @@ export const getCheckpoint = (type: CraftManoeuvre) => {
  * @returns
  */
 export const calcPitch = (position: number): number => pitchAmplitude * Math.sin(pitchFrequency * position);
+
+/**
+ * returns a random item from an array
+ * @param arr
+ * @returns
+ */
+export const getRandomItemFromArray = <T>(arr: T[]): T | undefined => {
+  if (arr.length === 0) {
+    return undefined; // handle empty array case
+  }
+
+  const randomIndex = Math.floor(Math.random() * arr.length);
+  return arr[randomIndex];
+};

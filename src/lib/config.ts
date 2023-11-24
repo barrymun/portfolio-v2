@@ -9,6 +9,8 @@ import { CraftManoeuvre, Progression } from "utils/types";
 import craftGLB from "assets/glb/craft.glb";
 import dockGLB from "assets/glb/dock.glb";
 
+const gltfLoader: GLTFLoader = new GLTFLoader();
+
 let scene: THREE.Scene | undefined;
 let ambientLight: THREE.AmbientLight | undefined;
 let camera: THREE.PerspectiveCamera | undefined;
@@ -17,44 +19,47 @@ let renderer: THREE.WebGLRenderer | undefined;
 let craft: THREE.Group | undefined;
 let dock: THREE.Group | undefined;
 
-// load
-// TODO: might need to consider object.renderOrder when loading
-const gltfLoader: GLTFLoader = new GLTFLoader();
-gltfLoader.load(craftGLB, (gltf: GLTF) => {
-  const object = gltf.scene;
-  object.traverse((c) => {
-    c.castShadow = true;
+/**
+ * TODO: might need to consider object.renderOrder when loading
+ */
+const loadAssets = () => {
+  gltfLoader.load(craftGLB, (gltf: GLTF) => {
+    const object = gltf.scene;
+    object.traverse((c) => {
+      c.castShadow = true;
+    });
+
+    object.scale.setScalar(0.2);
+    // defaults for facing right
+    object.rotation.x = (-Math.PI / 180) * 90;
+    object.rotation.y = (Math.PI / 180) * 90;
+    object.rotation.z = (Math.PI / 180) * 90;
+    // default position
+    object.position.x = 0;
+    object.position.z = 1;
+
+    craft = object;
+    scene?.add(craft);
   });
 
-  object.scale.setScalar(0.2);
-  // defaults for facing right
-  object.rotation.x = (-Math.PI / 180) * 90;
-  object.rotation.y = (Math.PI / 180) * 90;
-  object.rotation.z = (Math.PI / 180) * 90;
-  // default position
-  object.position.z = 1;
+  gltfLoader.load(dockGLB, (gltf: GLTF) => {
+    const object = gltf.scene;
+    object.traverse((c) => {
+      c.castShadow = true;
+    });
 
-  craft = object;
-  scene?.add(craft);
-});
+    object.scale.setScalar(0.12);
+    // default rotation
+    object.rotation.x = (Math.PI / 180) * 90;
+    object.rotation.z = 1;
+    // default position
+    object.position.x = initialDockXPosition;
+    object.position.z = initialDockZPosition;
 
-gltfLoader.load(dockGLB, (gltf: GLTF) => {
-  const object = gltf.scene;
-  object.traverse((c) => {
-    c.castShadow = true;
+    dock = object;
+    scene?.add(dock);
   });
-
-  object.scale.setScalar(0.12);
-  // default rotation
-  object.rotation.x = (Math.PI / 180) * 90;
-  object.rotation.z = 1;
-  // default position
-  object.position.x = initialDockXPosition;
-  object.position.z = initialDockZPosition;
-
-  dock = object;
-  scene?.add(dock);
-});
+};
 
 const setupRenderer = () => {
   scene = new THREE.Scene();
@@ -105,6 +110,7 @@ const setupProgression = () => {
 
 export const initConfig = async () => {
   setupRenderer();
+  loadAssets();
   setupProgression();
 
   while (!craft || !dock) {

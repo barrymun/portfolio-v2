@@ -3,8 +3,8 @@ import van from "vanjs-core";
 import { performManoeuvre, turnCraft } from "lib/scene";
 import { appState } from "utils/state";
 
-// import ArrowNarrowLeftSrc from "@tabler/icons/arrow-narrow-left.svg";
-// import ArrowNarrowRightSrc from "@tabler/icons/arrow-narrow-right.svg";
+import ArrowNarrowLeftSrc from "@tabler/icons/arrow-narrow-left.svg";
+import ArrowNarrowRightSrc from "@tabler/icons/arrow-narrow-right.svg";
 
 const { button, div, img } = van.tags;
 
@@ -55,7 +55,7 @@ export const Controls = () => {
         disabled: () => appState.currentProgressionIndex.val === 0 || appState.isPerformingManoeuvre.val,
       },
       img({
-        // src: ArrowNarrowLeftSrc,
+        src: ArrowNarrowLeftSrc,
       }),
     ),
     button(
@@ -66,7 +66,7 @@ export const Controls = () => {
           appState.isPerformingManoeuvre.val,
       },
       img({
-        // src: ArrowNarrowRightSrc,
+        src: ArrowNarrowRightSrc,
       }),
     ),
   );

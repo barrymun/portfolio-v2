@@ -15,7 +15,7 @@ export const ProjectInfoCard = () => {
       span(
         div(
           {
-            class: "github-small",
+            class: "github",
             onclick: () =>
               window.open(
                 appState.progressions.val[appState.currentProgressionIndex.val].project.url,

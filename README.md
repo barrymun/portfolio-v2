@@ -1,11 +1,7 @@
 # TODO List
 
 - [ ] Add a comet
-- [ ] Alter the craft and dock sprites
-- [ ] Add the details of at least 3 projects
-- [ ] Create a details card CSS element for these projects
 - [ ] Add a planet/moon that rotates somewhere
-- [ ] Fix the icons for the previous/next buttons
 - [ ] Choose a custom font to fit the theme
 
 ## In Progress
@@ -27,6 +23,9 @@
 - [x] Misc
   - [x] Handle resize events for all elements
   - [x] Make the previous/next buttons smaller on mobile
+  - [x] Fix the icons for the previous/next buttons
+  - [x] Create a details card CSS element for these projects
+  - [x] Add the details of at least 3 projects
 
 # Credits
 

@@ -6,7 +6,7 @@
   
   width: 240px;
   height: 240px;
-  background-color: white;
+  background-color: #67697C;
 
   visibility: visible;
   opacity: 0;
@@ -18,6 +18,13 @@
   
   color: black;
 }
+#project-info-card .title {
+  font-size: 0.8rem;
+}
+#project-info-card .description {
+  font-size: 1.2rem;
+}
+
 @media screen and (max-width: 1200px) {
   #project-info-card {
     left: 63%;
@@ -26,7 +33,8 @@
     height: 200px;
   }
 }
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 992px),
+  screen and (max-height: 768px) {
   #project-info-card {
     left: 65%;
     
@@ -38,8 +46,19 @@
   #project-info-card {
     left: 67%;
     
-    width: 80px;
-    height: 80px;
+    width: 40px;
+    height: 40px;
+  }
+
+  #project-info-card .title,
+  #project-info-card .description {
+    display: none;
+  }
+}
+
+@media screen and (max-height: 1000px) {
+  #project-info-card {
+    /* top: 10%; */
   }
 }
 
@@ -98,10 +117,13 @@
   }
 }
 
-#project-info-card .title {
-  font-size: 0.8rem;
-}
+.github-small {
+  width: 100%;
+  height: 100%;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-#project-info-card .description {
-  font-size: 1.2rem;
+  cursor: pointer;
 }

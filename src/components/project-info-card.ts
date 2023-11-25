@@ -3,14 +3,30 @@ import van from "vanjs-core";
 import { projectInfoCardId } from "utils/constants";
 import { appState } from "utils/state";
 
-const { div } = van.tags;
+import githubSrc from "@tabler/icons/brand-github.svg";
+
+const { div, img, span } = van.tags;
 
 export const ProjectInfoCard = () => {
   return div(
     { id: projectInfoCardId },
     () =>
       appState.progressions.val.length > 0 &&
-      div(
+      span(
+        div(
+          {
+            class: "github-small",
+            onclick: () =>
+              window.open(
+                appState.progressions.val[appState.currentProgressionIndex.val].project.url,
+                "_blank",
+                "noopener noreferrer",
+              ),
+          },
+          img({
+            src: githubSrc,
+          }),
+        ),
         div(
           {
             class: "title",

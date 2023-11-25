@@ -4,8 +4,8 @@
   left: 57%;
   z-index: 1;
   
-  width: 250px;
-  height: 250px;
+  width: 240px;
+  height: 240px;
   background-color: white;
 
   visibility: visible;
@@ -18,9 +18,25 @@
   
   color: black;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1200px) {
+  #project-info-card {
+    left: 63%;
+    
+    width: 200px;
+    height: 200px;
+  }
+}
+@media screen and (max-width: 992px) {
   #project-info-card {
     left: 65%;
+    
+    width: 160px;
+    height: 160px;
+  }
+}
+@media screen and (max-width: 768px) {
+  #project-info-card {
+    left: 67%;
     
     width: 80px;
     height: 80px;

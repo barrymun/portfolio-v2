@@ -110,6 +110,7 @@ const setupProgression = () => {
 
 export const initConfig = async () => {
   setupRenderer();
+  // make sure that the renderer (and scene) are ready before loading assets
   loadAssets();
   setupProgression();
 

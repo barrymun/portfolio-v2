@@ -7,7 +7,7 @@ const { div } = van.tags;
 export const Scene = () => {
   return div(
     {
-      class: "scene",
+      class: () => (appState.isInteractive.val ? "scene" : "hidden"),
     },
     () => div(appState.config.val && appState.config.val.renderer.domElement),
   );

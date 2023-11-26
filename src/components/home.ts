@@ -14,7 +14,7 @@ export const Home = () => {
 
   return div(
     {
-      class: () => (!appState.isInteractive.val ? "home" : "home-hidden"),
+      class: () => (!appState.isInteractive.val ? "home" : "hidden"),
     },
     div(
       div(

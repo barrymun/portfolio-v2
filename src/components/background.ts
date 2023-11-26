@@ -7,7 +7,7 @@ const { div } = van.tags;
 export const Background = () => {
   return div(
     {
-      class: "background",
+      class: () => (appState.isInteractive.val ? "background" : "hidden"),
     },
     () => div(appState.background.val && appState.background.val),
   );

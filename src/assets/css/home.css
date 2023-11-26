@@ -29,26 +29,14 @@
 
   margin-top: 48px;
 
-  animation: workSectionFadeIn 1s ease-in-out infinite alternate;
+  animation: fadeInOut 1s ease-in-out infinite alternate;
 }
 .home .work div:hover {
   cursor: pointer;
   color: var(--secondary);
   text-decoration: underline;
 }
-@keyframes workSectionFadeIn {
-  from {
-    opacity: 0.5;
-  }
-  to {
-    opacity: 1;
-  }
-}
 
 .home .divider {
   width: 25%;
-}
-
-.home-hidden {
-  display: none;
 }

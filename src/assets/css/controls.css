@@ -7,6 +7,8 @@
   justify-content: center;
   align-items: center;
   gap: 16px;
+
+  animation: fadeIn 1s ease-in-out;
 }
 @media screen and (max-width: 768px) {
   .controls {
@@ -30,8 +32,4 @@
     width: 40px;
     height: 40px;
   }
-}
-
-.controls-hidden {
-  display: none;
 }

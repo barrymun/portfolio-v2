@@ -12,6 +12,7 @@ import { handleResizeScene, performHover, renderCraft, simulateDockMovement } fr
 import { dockPositionOffet, positionOffset } from "utils/constants";
 import { appState } from "utils/state";
 
+import "assets/css/fonts.css";
 import "assets/css/base.css";
 import "assets/css/icons.css";
 import "assets/css/background.css";

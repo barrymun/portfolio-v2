@@ -14,18 +14,21 @@ export const ProjectInfoCard = () => {
       appState.progressions.val.length > 0 &&
       span(
         div(
-          {
-            class: "github",
-            onclick: () =>
-              window.open(
-                appState.progressions.val[appState.currentProgressionIndex.val].project.url,
-                "_blank",
-                "noopener noreferrer",
-              ),
-          },
-          img({
-            src: githubSrc,
-          }),
+          div(
+            {
+              class: "github",
+              onclick: () =>
+                window.open(
+                  appState.progressions.val[appState.currentProgressionIndex.val].project.url,
+                  "_blank",
+                  "noopener noreferrer",
+                ),
+            },
+            img({
+              src: githubSrc,
+            }),
+          ),
+          div(`Click me!`),
         ),
         div(
           {

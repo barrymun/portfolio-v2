@@ -1,12 +1,25 @@
 .home {
   position: absolute;
 
-  width: 100vw;
-  height: 100vh;
+  padding: 16px;
+
+  width: calc(100vw - 32px);
+  height: calc(100vh - 32px);
 
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+  .home div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    text-align: center;
+  }
 }
 
 .home .greeting {
@@ -39,4 +52,9 @@
 
 .home .divider {
   width: 25%;
+}
+@media screen and (max-width: 768px) {
+  .home .divider {
+    width: 0%;
+  }
 }

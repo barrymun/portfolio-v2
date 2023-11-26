@@ -11,6 +11,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  --primary: #D5B9B2;
+  --secondary: #67697C;
 }
 
 body {
@@ -24,17 +27,17 @@ body {
 
 a {
   font-weight: 500;
-  color: #67697C;
+  color: var(--secondary);
   text-decoration: inherit;
 }
 a:hover {
-  color: #D5B9B2;
+  color: var(--primary);
 }
 
 button {
   border: none;
   display: inline-block;
-  background-color: #67697C;
+  background-color: var(--secondary);
   color: white;
   padding: 10px 20px;
   text-align: center;
@@ -44,7 +47,7 @@ button {
   transition: background-color 0.3s, transform 0.3s;
 }
 button:hover {
-  background-color: #D5B9B2; 
+  background-color: var(--primary); 
   transform: scale(1.05);
 }
 button:disabled {

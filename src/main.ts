@@ -4,6 +4,7 @@ import { ForkMe } from "components/fork-me";
 import { ProjectInfoCard } from "components/project-info-card";
 import { Background } from "components/background";
 import { Controls } from "components/controls";
+import { Home } from "components/home";
 import { Scene } from "components/scene";
 import { handleResizeBackground, initBackground, renderBackground } from "lib/background";
 import { initConfig } from "lib/config";
@@ -15,6 +16,7 @@ import { appState } from "utils/state";
 import "assets/css/fonts.css";
 import "assets/css/base.css";
 import "assets/css/icons.css";
+import "assets/css/home.css";
 import "assets/css/background.css";
 import "assets/css/scene.css";
 import "assets/css/controls.css";
@@ -22,6 +24,7 @@ import "assets/css/project-info-card.css";
 
 const dom = document.body as HTMLBodyElement;
 
+van.add(dom, Home());
 van.add(dom, ForkMe());
 van.add(dom, ProjectInfoCard());
 van.add(dom, Background());
@@ -53,7 +56,7 @@ const animate = () => {
   }
 };
 
-const handleLoad = async () => {
+export const startExplorer = async () => {
   await initConfig();
   initBackground();
   animate();
@@ -66,11 +69,9 @@ const handleResize = () => {
 };
 
 const handleUnload = () => {
-  window.removeEventListener("load", handleLoad);
   window.removeEventListener("unload", handleUnload);
   window.removeEventListener("resize", handleResize);
 };
 
-window.addEventListener("load", handleLoad);
 window.addEventListener("unload", handleUnload);
 window.addEventListener("resize", handleResize);

@@ -4,6 +4,7 @@ import { starSpeedNormal } from "utils/constants";
 import { AppState, Config, CraftDirection, Progression, StarSpeed } from "utils/types";
 
 export const appState: AppState = {
+  isInteractive: van.state<boolean>(false),
   background: van.state<HTMLCanvasElement | undefined>(undefined),
   config: van.state<Config | undefined>(undefined),
   progressions: van.state<Progression[]>([]),

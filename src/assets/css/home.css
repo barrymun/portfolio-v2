@@ -1,0 +1,42 @@
+.home {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home .greeting {
+  color: var(--primary);
+  font-size: 2rem;
+}
+
+.home .whoami {
+  color: var(--secondary);
+  font-size: 1.5rem;
+}
+
+.home .work {
+  flex: 0;
+
+  display: flex;
+  
+  color: var(--primary);
+  font-size: 1.0rem;
+
+  margin-top: 48px;
+}
+.home .work div:hover {
+  cursor: pointer;
+  color: var(--secondary);
+  text-decoration: underline;
+}
+
+.home .divider {
+  width: 25%;
+}
+
+.home-hidden {
+  display: none;
+}

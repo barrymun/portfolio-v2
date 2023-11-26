@@ -37,6 +37,7 @@ export type Star = {
 export type StarSpeed = typeof starSpeedNormal | typeof starSpeedFast;
 
 export interface AppState {
+  isInteractive: State<boolean>;
   background: State<HTMLCanvasElement | undefined>;
   config: State<Config | undefined>;
   isPerformingManoeuvre: State<boolean>;

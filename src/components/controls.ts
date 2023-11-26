@@ -47,7 +47,7 @@ export const Controls = () => {
 
   return div(
     {
-      class: "controls",
+      class: () => (appState.isInteractive.val ? "controls" : "controls-hidden"),
     },
     button(
       {

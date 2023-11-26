@@ -5,6 +5,10 @@ import { IconProps } from "utils/types";
 
 const { div, path, svg } = van.tags;
 
+/**
+ * TODO: might use components instead of img src in the future
+ * @returns
+ */
 export const ArrowNarrowLeft = ({ width = 24, height = 24 }: IconProps) => {
   return div(
     svg(

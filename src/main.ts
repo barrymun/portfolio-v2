@@ -1,6 +1,6 @@
 import van from "vanjs-core";
 
-import { ForkMe } from "components/fork-me";
+import { GitHub } from "components/repo";
 import { ProjectInfoCard } from "components/project-info-card";
 import { Background } from "components/background";
 import { Controls } from "components/controls";
@@ -16,6 +16,7 @@ import { appState } from "utils/state";
 import "assets/css/fonts.css";
 import "assets/css/base.css";
 import "assets/css/icons.css";
+import "assets/css/repo.css";
 import "assets/css/home.css";
 import "assets/css/background.css";
 import "assets/css/scene.css";
@@ -25,7 +26,7 @@ import "assets/css/project-info-card.css";
 const dom = document.body as HTMLBodyElement;
 
 van.add(dom, Home());
-van.add(dom, ForkMe());
+van.add(dom, GitHub());
 van.add(dom, ProjectInfoCard());
 van.add(dom, Background());
 van.add(dom, Scene());

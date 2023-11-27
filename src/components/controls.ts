@@ -71,6 +71,6 @@ export const Controls = () => {
         }),
       ),
     ),
-    div(`Click the arrows to view more projects`),
+    div(`Navigate by clicking the arrows`),
   );
 };

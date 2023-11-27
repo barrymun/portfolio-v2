@@ -1,0 +1,30 @@
+.repo {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 1;
+
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  background-color: var(--primary);
+  border: none;
+  border-radius: 50%;
+}
+.repo:hover {
+  cursor: pointer;
+  background-color: var(--secondary);
+}
+@media screen and (min-width: 768px) {
+  .repo {
+    top: 32px;
+    right: 32px;
+
+    width: 60px;
+    height: 60px;
+  }
+}

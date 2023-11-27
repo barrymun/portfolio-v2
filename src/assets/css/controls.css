@@ -1,11 +1,13 @@
 .controls {
   position: absolute;
   bottom: 32px;
-  left: calc(50% - 60px - 8px);
+
+  width: 100%;
 
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   gap: 16px;
 
   animation: fadeIn 1s ease-in-out;
@@ -13,8 +15,14 @@
 @media screen and (max-width: 768px) {
   .controls {
     bottom: 24px;
-    left: calc(50% - 40px - 8px);
   }
+}
+
+.controls div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
 }
 
 .controls button {

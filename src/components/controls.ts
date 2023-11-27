@@ -49,25 +49,28 @@ export const Controls = () => {
     {
       class: () => (appState.isInteractive.val ? "controls" : "hidden"),
     },
-    button(
-      {
-        onclick: handlePrevious,
-        disabled: () => appState.currentProgressionIndex.val === 0 || appState.isPerformingManoeuvre.val,
-      },
-      img({
-        src: arrowNarrowLeftSrc,
-      }),
+    div(
+      button(
+        {
+          onclick: handlePrevious,
+          disabled: () => appState.currentProgressionIndex.val === 0 || appState.isPerformingManoeuvre.val,
+        },
+        img({
+          src: arrowNarrowLeftSrc,
+        }),
+      ),
+      button(
+        {
+          onclick: handleNext,
+          disabled: () =>
+            appState.currentProgressionIndex.val === appState.progressions.val.length ||
+            appState.isPerformingManoeuvre.val,
+        },
+        img({
+          src: arrowNarrowRightSrc,
+        }),
+      ),
     ),
-    button(
-      {
-        onclick: handleNext,
-        disabled: () =>
-          appState.currentProgressionIndex.val === appState.progressions.val.length ||
-          appState.isPerformingManoeuvre.val,
-      },
-      img({
-        src: arrowNarrowRightSrc,
-      }),
-    ),
+    div(`Click the arrows to view more projects`),
   );
 };

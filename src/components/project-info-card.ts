@@ -28,7 +28,12 @@ export const ProjectInfoCard = () => {
               src: githubSrc,
             }),
           ),
-          div(`Click me!`),
+          div(
+            {
+              class: "click-me",
+            },
+            `Click me!`,
+          ),
         ),
         div(
           {

@@ -1,6 +1,6 @@
 #project-info-card {
   position: absolute;
-  top: 18%;
+  top: 16%;
   left: 57%;
   z-index: 1;
   
@@ -31,6 +31,7 @@
   cursor: pointer;
 }
 
+/* large devices */
 @media screen and (max-width: 1200px) {
   #project-info-card {
     left: 63%;
@@ -39,6 +40,7 @@
     height: 200px;
   }
 }
+/* medium devices */
 @media screen and (max-width: 992px),
   screen and (max-height: 768px) {
   #project-info-card {
@@ -56,6 +58,14 @@
     display: none;
   }
 }
+/* mobile devices */
+/* above */
+@media screen and (min-width: 768px) {
+  #project-info-card .click-me {
+    display: none;
+  }
+}
+/* below */
 @media screen and (max-width: 768px) {
   #project-info-card {
     left: 67%;

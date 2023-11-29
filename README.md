@@ -2,6 +2,7 @@
 
 - [ ] Add a comet
 - [ ] Add a planet/moon that rotates somewhere
+- [ ] Change favicon
 
 ## In Progress
 

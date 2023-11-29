@@ -2,7 +2,6 @@
 
 - [ ] Add a comet
 - [ ] Add a planet/moon that rotates somewhere
-- [ ] Choose a custom font to fit the theme
 
 ## In Progress
 
@@ -26,6 +25,7 @@
   - [x] Fix the icons for the previous/next buttons
   - [x] Create a details card CSS element for these projects
   - [x] Add the details of at least 3 projects
+  - [x] Choose a custom font to fit the theme (Poppins)
 
 # Credits
 

@@ -8,6 +8,14 @@ import githubSrc from "@tabler/icons/brand-github.svg";
 const { div, img, span } = van.tags;
 
 export const ProjectInfoCard = () => {
+  const handleClick = () => {
+    window.open(
+      appState.progressions.val[appState.currentProgressionIndex.val].project.url,
+      "_blank",
+      "noopener noreferrer",
+    );
+  };
+
   return div(
     { id: projectInfoCardId },
     () =>
@@ -17,12 +25,7 @@ export const ProjectInfoCard = () => {
           div(
             {
               class: "github",
-              onclick: () =>
-                window.open(
-                  appState.progressions.val[appState.currentProgressionIndex.val].project.url,
-                  "_blank",
-                  "noopener noreferrer",
-                ),
+              onclick: handleClick,
             },
             img({
               src: githubSrc,
@@ -31,6 +34,7 @@ export const ProjectInfoCard = () => {
           div(
             {
               class: "click-me",
+              onclick: handleClick,
             },
             `Click me!`,
           ),

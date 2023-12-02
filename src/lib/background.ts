@@ -82,9 +82,9 @@ const moveStars = () => {
   }
 };
 
-const handleMouseMove = (e: MouseEvent) => {
-  const mouseX = e.clientX - canvas.getBoundingClientRect().left;
-  const mouseY = e.clientY - canvas.getBoundingClientRect().top;
+const handleMove = (clientX: number, clientY: number) => {
+  const mouseX = clientX - canvas.getBoundingClientRect().left;
+  const mouseY = clientY - canvas.getBoundingClientRect().top;
 
   for (const star of stars) {
     const distance = Math.sqrt((star.x - mouseX) ** 2 + (star.y - mouseY) ** 2);
@@ -106,8 +106,27 @@ const handleMouseMove = (e: MouseEvent) => {
   };
 };
 
-const handleMouseLeave = () => {
+const handleMouseMove = (e: MouseEvent) => {
+  handleMove(e.clientX, e.clientY);
+};
+
+const handleTouchMove = (e: TouchEvent) => {
+  const touch = e.touches[0]; // use the first touch point (touchstart not required)
+  if (touch) {
+    handleMove(touch.clientX, touch.clientY);
+  }
+};
+
+const resetMousePosition = () => {
   mousePosition = undefined;
+};
+
+const handleMouseLeave = () => {
+  resetMousePosition();
+};
+
+const handleTouchEnd = () => {
+  resetMousePosition();
 };
 
 const initBackground = () => {
@@ -148,5 +167,11 @@ const handleResizeBackground = () => {
 
 canvas.addEventListener("mousemove", handleMouseMove);
 canvas.addEventListener("mouseleave", handleMouseLeave);
+
+canvas.addEventListener("touchmove", handleTouchMove);
+canvas.addEventListener("touchend", handleTouchEnd);
+
+// reset the mouse position when the user clicks on the canvas
+canvas.addEventListener("click", resetMousePosition);
 
 export { initBackground, renderBackground, handleResizeBackground };

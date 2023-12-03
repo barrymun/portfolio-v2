@@ -1,8 +1,7 @@
 # TODO List
 
 - [ ] Add a comet
-- [ ] Add a planet/moon that rotates somewhere
-- [ ] Change favicon
+- [ ] Add a planet/moon that rotates in the background
 - [ ] Support for localisation
 
 ## In Progress
@@ -28,6 +27,8 @@
   - [x] Create a details card CSS element for these projects
   - [x] Add the details of at least 3 projects
   - [x] Choose a custom font to fit the theme (Poppins)
+  - [x] Change favicon
+  - [x] Add `touchstart` and `touchend` event listeners
 
 # Credits
 

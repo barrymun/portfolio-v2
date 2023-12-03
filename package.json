@@ -12,7 +12,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": "vitest"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.198",
@@ -25,7 +26,8 @@
     "prettier": "3.0.3",
     "typescript": "^5.2.2",
     "vite": "^4.4.5",
-    "vite-tsconfig-paths": "^4.2.0"
+    "vite-tsconfig-paths": "^4.2.0",
+    "vitest": "^0.34.6"
   },
   "dependencies": {
     "@tabler/icons": "^2.40.0",

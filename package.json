@@ -6,6 +6,9 @@
   "lint-staged": {
     "src/**/*.ts": [
       "prettier --write \"src/**/*.ts\""
+    ],
+    "tests/**/*.ts": [
+      "prettier --write \"tests/**/*.ts\""
     ]
   },
   "scripts": {
@@ -13,7 +16,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "prepare": "husky install",
-    "test": "vitest"
+    "lint": "yarn eslint src/**/*.ts && yarn eslint tests/**/*.ts",
+    "test": "vitest run"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.198",

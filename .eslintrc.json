@@ -17,5 +17,6 @@
         "caughtErrorsIgnorePattern": "^_"
       }
     ]
-  }
+  },
+  "ignorePatterns": ["node_modules/", "dist/", "*.config.js"]
 }

@@ -1,6 +1,29 @@
-# Interactive 3D Portfolio Showcase with Spacecraft Maneuvers
+# Interactive 3D Portfolio Showcase with Spacecraft Manoeuvers
 
-This portfolio showcases a spacecraft navigating through a dynamic 3D environment, highlighting a collection of diverse projects. Users can seamlessly navigate between projects using next and previous arrow buttons, with the spacecraft performing captivating maneuvers during each transition. Upon page load, a randomized sequence of maneuvers adds an element of surprise. The background features a starfield that responds to the user's cursor or finger on mobile devices, gracefully moving aside to provide an immersive viewing experience.
+This portfolio showcases a spacecraft navigating through a dynamic 3D environment, highlighting a collection of diverse projects. Users can seamlessly navigate between projects using next and previous arrow buttons, with the spacecraft performing captivating manoeuvers during each transition. Upon page load, a randomized sequence of manoeuvers adds an element of surprise. The background features a starfield that responds to the user's cursor or finger on mobile devices, gracefully moving aside to provide an immersive viewing experience.
+
+## Assets
+
+Here are some visual representations of our interactive 3D portfolio project, including GIFs and images that highlight its features and functionality.
+
+### Project in Action
+
+**GIF: Navigating Between Projects**
+
+![Demo](screenshots/demo.gif)
+
+*Description*: This GIF demonstrates the spacecraft's smooth maneuvers as users navigate between different projects using the arrow buttons. To view some of my other projects just tap "Click me!" on mobile, or click the GitHub icon on larger devices.
+
+### Background Stars
+
+**GIF: Interactive Background Stars**
+
+![Background Stars](screenshots/stars.gif)
+
+*Description*: A GIF showcasing the dynamic background with interactive stars that respond to the user's cursor or touch on mobile devices, providing an immersive experience.
+
+These screenshots and GIFs offer a glimpse into the various aspects of our interactive 3D portfolio. Feel free to explore the project further to experience it in action.
+
 
 ## Testing
 
@@ -52,9 +75,13 @@ yarn test
   - [x] Change favicon
   - [x] Add `touchstart` and `touchend` event listeners
 
+## Font
+
+The [Poppins](https://fonts.google.com/specimen/Poppins) font is used.
+
 ## Credits
 
-### GLB Assets
+### GLB/FBX Assets
 
 - Jet by jeremy [CC-BY](https://creativecommons.org/licenses/by/3.0/) via [Poly Pizza](https://poly.pizza/m/6fyLMORhgGK)
 - International Space Station by Poly by Google [CC-BY](https://creativecommons.org/licenses/by/3.0/) via [Poly Pizza](https://poly.pizza/m/d3Fq5H6ne8E)

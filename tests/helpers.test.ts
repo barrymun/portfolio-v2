@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getPeriod, getRandomItemFromArray } from "../src/utils/helpers";
+import { calcPitch, getPeriod, getRandomItemFromArray } from "../src/utils/helpers";
 
 describe("getPeriod", () => {
   it("should return the correct period for a positive frequency", () => {
@@ -192,6 +192,24 @@ describe("getPeriod", () => {
 
     // Assert
     expect(result).toBe(expectedPeriod);
+  });
+});
+
+describe("calcPitch", () => {
+  it("should calculate pitch correctly for a given position", () => {
+    // Arrange
+    const pitchAmplitude = 2; // Adjust the values as needed
+    const pitchFrequency = 1; // Adjust the values as needed
+    const position = 0; // Adjust the position value as needed
+
+    // Act
+    const result = calcPitch(position);
+
+    // Calculate the expected result manually based on the formula
+    const expected = pitchAmplitude * Math.sin(pitchFrequency * position);
+
+    // Assert
+    expect(result).toBeCloseTo(expected, 5); // Use toBeCloseTo for approximate equality
   });
 });
 

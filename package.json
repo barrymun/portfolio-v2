@@ -38,5 +38,6 @@
     "lodash": "^4.17.21",
     "three": "^0.158.0",
     "vanjs-core": "^1.2.1"
-  }
+  },
+  "packageManager": "yarn@1.22.19"  
 }

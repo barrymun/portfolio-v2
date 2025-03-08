@@ -1,5 +1,3 @@
-import van from "vanjs-core";
-
 import {
   hoverAmplitude,
   hoverFrequency,
@@ -16,13 +14,7 @@ import {
 } from "utils/constants";
 import { calcPitch, getCheckpoint } from "utils/helpers";
 import { appState } from "utils/state";
-
-// determine the sign to apply to various properties based on the craft's orientation
-let orientationSign: number = appState.craftDirection.val === "right" ? 1 : -1;
-
-van.derive(() => {
-  orientationSign = appState.craftDirection.val === "right" ? 1 : -1;
-});
+import { CraftDirection } from "utils/types";
 
 const performHover = (position: number) => {
   if (!appState.config.val) {
@@ -33,6 +25,7 @@ const performHover = (position: number) => {
     return;
   }
 
+  const orientationSign = appState.craftDirection.val === "right" ? 1 : -1;
   const rollAngle = hoverAmplitude * Math.sin(hoverFrequency * position);
   const rotationAngle = straightAndLevelPosition - rollAngle;
 
@@ -68,17 +61,15 @@ const simulateDockMovement = (position: number) => {
   appState.config.val.dock.position.y = verticalOffset;
 };
 
-const turnCraft = async (manuallyTurned: boolean) => {
+const turnCraft = async (craftDirection: CraftDirection) => {
   if (!appState.config.val) {
     return;
   }
 
+  const orientationSign = appState.craftDirection.val === "right" ? 1 : -1;
+
   // start performing the manoeuvre
   appState.isPerformingManoeuvre.val = true;
-
-  // save the old craft rotation on y and z axis
-  const craftRotationY = appState.config.val.craft.rotation.y;
-  const craftRotationZ = appState.config.val.craft.rotation.z;
 
   // set craft rotation on y and z axis to 0
   appState.config.val.craft.rotation.x = 0;
@@ -101,14 +92,9 @@ const turnCraft = async (manuallyTurned: boolean) => {
     await new Promise((resolve) => setTimeout(resolve, 1));
   }
 
-  // reset craft rotation on y and z axis
-  if (manuallyTurned) {
-    appState.config.val.craft.rotation.y = craftRotationY;
-    appState.config.val.craft.rotation.z = craftRotationZ;
-  }
-
   // end performing the manoeuvre
   appState.isPerformingManoeuvre.val = false;
+  appState.craftDirection.val = craftDirection;
 };
 
 const moveCraftUpAndDown = (position: number) => {
@@ -116,6 +102,7 @@ const moveCraftUpAndDown = (position: number) => {
     return;
   }
 
+  const orientationSign = appState.craftDirection.val === "right" ? 1 : -1;
   const pitch = calcPitch(position);
 
   // update craft position
@@ -141,6 +128,7 @@ const moveCraftLeftAndRight = (position: number) => {
     return;
   }
 
+  const orientationSign = appState.craftDirection.val === "right" ? 1 : -1;
   const pitch = calcPitch(position);
   const rollAngle = rollAmplitude * Math.sin(rollFrequency * position);
 
@@ -156,6 +144,7 @@ const performBackflip = (position: number) => {
     return;
   }
 
+  const orientationSign = appState.craftDirection.val === "right" ? 1 : -1;
   const pitch = calcPitch(position);
 
   appState.config.val.craft.position.x = -((orientationSign * pitch) / 4);
@@ -173,6 +162,8 @@ const pullAwayFromDock = async (): Promise<number> => {
   if (!appState.config.val) {
     return 0;
   }
+
+  const orientationSign = appState.craftDirection.val === "right" ? 1 : -1;
 
   let dockOffset: number = 0;
   while (dockOffset < Math.max(window.innerWidth, window.innerHeight, 1200)) {
@@ -194,6 +185,7 @@ const pullIntoDock = async (dockOffset: number) => {
     return;
   }
 
+  const orientationSign = appState.craftDirection.val === "right" ? 1 : -1;
   const inverseDockPosition = appState.config.val.dock.position.x * -1;
   appState.config.val.dock.position.x = inverseDockPosition;
   let velocity = orientationSign * (dockOffset / 10000);
@@ -217,6 +209,7 @@ const performManoeuvre = async () => {
     return;
   }
 
+  const orientationSign = appState.craftDirection.val === "right" ? 1 : -1;
   const manoeuvre = appState.progressions.val[appState.currentProgressionIndex.val].manoeuvre;
   const checkpoint = getCheckpoint(manoeuvre);
 

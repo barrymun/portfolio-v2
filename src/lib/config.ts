@@ -2,9 +2,9 @@ import * as THREE from "three";
 import { GLTF, GLTFLoader } from "three/examples/jsm/Addons.js";
 
 import { githubProjects, initialDockXPosition, initialDockZPosition } from "utils/constants";
-import { getCheckpoint, getRandomItemFromArray } from "utils/helpers";
+import { getCheckpoint } from "utils/helpers";
 import { appState } from "utils/state";
-import { CraftManoeuvre, Progression } from "utils/types";
+import { Progression } from "utils/types";
 
 import craftGLB from "assets/glb/craft.glb";
 import dockGLB from "assets/glb/dock.glb";
@@ -93,14 +93,14 @@ const setupRenderer = () => {
 };
 
 const setupProgression = () => {
-  const checkpoints: CraftManoeuvre[] = ["pitch-up-down", "bank-left-right", "backflip"];
+  // const checkpoints: CraftManoeuvre[] = ["pitch-up-down", "bank-left-right", "backflip"];
 
   const progressions: Progression[] = [];
   for (const githubProject of githubProjects) {
-    const checkpoint = getRandomItemFromArray(checkpoints)!;
+    // const checkpoint = getRandomItemFromArray(checkpoints)!;
     progressions.push({
-      checkpoint: getCheckpoint(checkpoint),
-      manoeuvre: checkpoint,
+      checkpoint: getCheckpoint(githubProject.checkpoint),
+      manoeuvre: githubProject.checkpoint,
       project: githubProject,
     });
   }

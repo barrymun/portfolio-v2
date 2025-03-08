@@ -12,36 +12,30 @@ export const Controls = () => {
   const handlePrevious = async () => {
     // user needs to face left if going backwards
     if (appState.craftDirection.val === "right") {
-      await turnCraft(true);
+      await turnCraft("left");
     }
     if (appState.currentProgressionIndex.val > 0) {
-      appState.craftDirection.val = "left";
-      appState.currentProgressionIndex.val -= 1;
       await performManoeuvre();
+      appState.currentProgressionIndex.val -= 1;
     }
     // if the user is at the beginning of the progression, turn the craft around
     if (appState.currentProgressionIndex.val === 0) {
-      await turnCraft(false);
-      // set this after the turn so that the craft faces the correct way
-      appState.craftDirection.val = "right";
+      await turnCraft("right");
     }
   };
 
   const handleNext = async () => {
     // user needs to face right if going forwards
     if (appState.craftDirection.val === "left") {
-      await turnCraft(true);
+      await turnCraft("right");
     }
     if (appState.currentProgressionIndex.val < appState.progressions.val.length) {
-      appState.craftDirection.val = "right";
       await performManoeuvre();
       appState.currentProgressionIndex.val += 1;
     }
     // if the user is at the end of the progression, turn the craft around
     if (appState.currentProgressionIndex.val === appState.progressions.val.length - 1) {
-      await turnCraft(false);
-      // set this after the turn so that the craft faces the correct way
-      appState.craftDirection.val = "left";
+      await turnCraft("left");
     }
   };
 

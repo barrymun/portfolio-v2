@@ -19,6 +19,7 @@ export type Project = {
   url: string;
   title: string;
   description: string;
+  checkpoint: CraftManoeuvre;
 };
 
 export type Progression = {

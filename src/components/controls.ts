@@ -38,7 +38,7 @@ export const Controls = () => {
       appState.currentProgressionIndex.val += 1;
     }
     // if the user is at the end of the progression, turn the craft around
-    if (appState.currentProgressionIndex.val === appState.progressions.val.length) {
+    if (appState.currentProgressionIndex.val === appState.progressions.val.length - 1) {
       await turnCraft(false);
       // set this after the turn so that the craft faces the correct way
       appState.craftDirection.val = "left";
@@ -63,7 +63,7 @@ export const Controls = () => {
         {
           onclick: handleNext,
           disabled: () =>
-            appState.currentProgressionIndex.val === appState.progressions.val.length ||
+            appState.currentProgressionIndex.val === appState.progressions.val.length - 1 ||
             appState.isPerformingManoeuvre.val,
         },
         img({
